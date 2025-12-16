@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, School, ChevronDown } from 'lucide-react';
+import { Menu, X, School, ChevronRight } from 'lucide-react';
 
 const SchoolERPHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // 1. Scroll Detection Logic
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -13,127 +14,133 @@ const SchoolERPHeader = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 2. Scroll to Top (Logo Click)
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
+  // 3. Smooth Scroll to Section
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    
+    if (element) {
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      setIsMenuOpen(false);
+    }
+  };
+
+  const navItems = ['Features', 'Modules', 'Testimonials', 'Contact'];
+
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100' 
-        : 'bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-200'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-3.5">
-          {/* Logo Section */}
-          <div className="flex items-center space-x-3 group cursor-pointer">
-            <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 p-2.5 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <School className="w-7 h-7 text-white" />
+    <>
+      {/* MAIN HEADER
+        Update:
+        - Used 'fixed' instead of 'absolute'.
+        - Ab ye mobile aur desktop dono par screen k top par stick rahega.
+      */}
+      <header 
+        className={`fixed z-50 left-1/2 -translate-x-1/2 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+          w-[90%] md:w-[80%] lg:w-[75%] max-w-5xl
+          ${isScrolled 
+            ? 'top-4 bg-white/90 shadow-2xl border-white/50 py-2' // Scroll karne par thoda compact ho jayega
+            : 'top-6 bg-white/95 border-white/40 shadow-xl py-3'  // Shuru me thoda niche rahega
+          }
+          rounded-full 
+          border backdrop-blur-xl
+        `}
+      >
+        {/* Inner Container */}
+        <div className="px-4 md:px-8">
+          <div className="flex justify-between items-center">
+            
+            {/* LOGO SECTION */}
+            <div 
+              onClick={handleLogoClick}
+              className="flex items-center gap-2 md:gap-3 cursor-pointer select-none group"
+            >
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <School className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent leading-none">
+                  NextGen
+                </span>
+                <span className="text-[9px] font-extrabold text-blue-600 tracking-[0.2em] uppercase mt-0.5">
+                  ERP System
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent leading-tight">
-                NextGen ERP
-              </span>
-              <span className="text-xs text-gray-500 font-medium tracking-wide">
-                Education Management
-              </span>
+
+            {/* DESKTOP NAVIGATION */}
+            <nav className="hidden lg:flex items-center bg-gray-100/60 p-1 rounded-full border border-gray-200/50 ml-4">
+              {navItems.map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={(e) => scrollToSection(e, item.toLowerCase())}
+                  className="px-5 py-2 text-xs font-bold text-gray-600 hover:text-blue-700 hover:bg-white hover:shadow-md rounded-full transition-all duration-300 ease-out"
+                >
+                  {item}
+                </a>
+              ))}
+            </nav>
+
+            {/* RIGHT SIDE BUTTON */}
+            <div className="hidden lg:flex items-center">
+              <button className="px-6 py-2.5 text-xs bg-gray-900 text-white font-bold rounded-full hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 group">
+                Get Started 
+                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform"/>
+              </button>
             </div>
+
+            {/* MOBILE MENU TOGGLE */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              className="lg:hidden p-2 bg-gray-100/80 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors active:scale-95"
+            >
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            <a href="#features" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium rounded-lg hover:bg-blue-50">
-              Features
-            </a>
-            <a href="#modules" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium rounded-lg hover:bg-blue-50">
-              Modules
-            </a>
-            <a href="#pricing" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium rounded-lg hover:bg-blue-50">
-              Pricing
-            </a>
-            <a href="#testimonials" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium rounded-lg hover:bg-blue-50">
-              Testimonials
-            </a>
-            <a href="#contact" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium rounded-lg hover:bg-blue-50">
-              Contact
-            </a>
-          </nav>
-
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
-            <button className="px-5 py-2.5 text-gray-700 hover:text-blue-600 font-semibold transition-colors rounded-lg hover:bg-gray-50">
-              Sign In
-            </button>
-            <button className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 text-white rounded-lg font-semibold shadow-md hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 hover:from-blue-700 hover:to-indigo-700">
-              Start Free Trial
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Toggle menu"
+          {/* MOBILE MENU EXPANDABLE */}
+          <div 
+            className={`lg:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+              isMenuOpen ? 'max-h-[500px] opacity-100 mt-4 pb-2' : 'max-h-0 opacity-0'
+            }`}
           >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-gray-700" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-700" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-100 animate-in slide-in-from-top duration-200">
-            <nav className="flex flex-col space-y-1">
-              <a 
-                href="#features" 
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a 
-                href="#modules" 
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Modules
-              </a>
-              <a 
-                href="#pricing" 
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Pricing
-              </a>
-              <a 
-                href="#testimonials" 
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Testimonials
-              </a>
-              <a 
-                href="#contact" 
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </a>
-              <div className="pt-3 space-y-2 border-t border-gray-100 mt-2">
-                <button className="w-full px-4 py-3 text-gray-700 hover:text-blue-600 font-semibold text-left hover:bg-gray-50 rounded-lg transition-colors">
-                  Sign In
-                </button>
-                <button className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
-                  Start Free Trial
+            <nav className="flex flex-col space-y-1 pt-2 border-t border-gray-100">
+              {navItems.map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={(e) => scrollToSection(e, item.toLowerCase())}
+                  className="p-3 text-center text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50/80 rounded-xl transition-all"
+                >
+                  {item}
+                </a>
+              ))}
+              <div className="pt-3 px-1">
+                <button className="w-full py-3 text-sm font-bold text-white bg-gray-900 hover:bg-black rounded-xl shadow-lg transition-all">
+                  Get Started Free
                 </button>
               </div>
             </nav>
           </div>
-        )}
-      </div>
+        </div>
+      </header>
 
-      {/* Decorative gradient line */}
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent opacity-50"></div>
-    </header>
+      {/* SPACER DIV - Isko bada rakha hai taaki content header ke niche na chupe */}
+      <div className="h-32 md:h-40 w-full"></div>
+    </>
   );
 };
 
