@@ -1,376 +1,286 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Quote, Star, Play, Pause, TrendingUp, Users, Award, Clock } from 'lucide-react';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import { Quote, Star, Users, TrendingUp, Award, Clock, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-// Sample testimonials data
+// --- Utility for Cleaner Classes ---
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+// --- Data ---
 const testimonials = [
   {
     name: "Dr. Priya Sharma",
-    role: "Principal, Delhi Public School",
+    role: "Principal",
+    org: "Delhi Public School",
     content: "NextGen ERP has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
     rating: 5,
-    image: "👩‍💼"
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200",
+    color: "blue"
   },
   {
     name: "Rajesh Kumar",
-    role: "Director, Springdale International",
+    role: "Director",
+    org: "Springdale Intl.",
     content: "Outstanding platform! Our administrative efficiency has increased by 60%. The support team is incredibly responsive and helpful.",
     rating: 5,
-    image: "👨‍💼"
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200&h=200",
+    color: "indigo"
   },
   {
     name: "Anita Verma",
-    role: "Academic Head, Modern School",
+    role: "Academic Head",
+    org: "Modern School",
     content: "The reporting and analytics features are exceptional. We can now make data-driven decisions that benefit our students and faculty.",
     rating: 5,
-    image: "👩‍🏫"
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
+    color: "violet"
   },
   {
     name: "Vikram Singh",
-    role: "Administrator, Cambridge Academy",
+    role: "Administrator",
+    org: "Cambridge Academy",
     content: "Implementation was seamless and the ROI has been remarkable. This system has become indispensable to our daily operations.",
     rating: 5,
-    image: "👨‍💻"
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&h=200",
+    color: "blue"
+  },
+  {
+    name: "Sarah Jenkins",
+    role: "IT Coordinator",
+    org: "St. Xavier's High",
+    content: "The security features and data privacy compliance gave us peace of mind. Best ed-tech investment we've made in a decade.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1598550874175-4d7112ee7f1c?auto=format&fit=crop&q=80&w=200&h=200",
+    color: "indigo"
   }
 ];
 
-const TestimonialsCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const autoPlayRef = useRef(null);
+const stats = [
+  { icon: Users, value: "500+", label: "Partner Schools", color: "text-blue-600" },
+  { icon: TrendingUp, value: "50K+", label: "Active Students", color: "text-indigo-600" },
+  { icon: Award, value: "98%", label: "Satisfaction", color: "text-violet-600" },
+  { icon: Clock, value: "24/7", label: "Expert Support", color: "text-blue-500" }
+];
 
-  useEffect(() => {
-    if (isPlaying) {
-      autoPlayRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
-    }
-    return () => clearInterval(autoPlayRef.current);
-  }, [isPlaying, currentIndex]);
+// --- Components ---
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
-
+const TestimonialCard = ({ item }) => {
   return (
-    <section id="testimonials" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30">
+    <div className="w-[350px] md:w-[400px] flex-shrink-0 mx-4 h-full">
+      <div className="relative group h-full">
+        {/* Card Background & Border Effect */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-300 to-indigo-300 rounded-2xl opacity-20 group-hover:opacity-60 transition duration-500 blur-sm"></div>
+        
+        <div className="relative h-full bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+          
+          {/* Header */}
+          <div>
+            <div className="flex justify-between items-start mb-6">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-white shadow-md">
+                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
+                    <CheckCircle2 className="w-3 h-3 text-blue-500" />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 leading-tight">{item.name}</h4>
+                  <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mt-0.5">{item.role}</p>
+                  <p className="text-xs text-gray-500">{item.org}</p>
+                </div>
+              </div>
+              <Quote className="w-8 h-8 text-indigo-200 group-hover:text-indigo-400 transition-colors duration-300" />
+            </div>
+
+            {/* Content */}
+            <p className="text-gray-700 leading-relaxed text-[15px] mb-6 font-medium">
+              "{item.content}"
+            </p>
+          </div>
+
+          {/* Footer / Rating */}
+          <div className="flex items-center gap-1 border-t border-gray-100 pt-4 mt-auto">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+            ))}
+            <span className="ml-auto text-xs font-medium text-gray-400">Verified User</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Infinite Moving Cards Component ---
+const Marquee = ({ items, direction = "left", speed = 40 }) => {
+  return (
+    <div className="relative flex overflow-hidden group">
+      {/* Gradient Masks for fading edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-l from-[#eff6ff] via-[#eff6ff]/80 to-transparent pointer-events-none"></div>
       
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(59, 130, 246) 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }}></div>
+      <motion.div
+        className="flex py-10"
+        animate={{
+          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: speed,
+            ease: "linear",
+          },
+        }}
+        // Pause on hover
+        whileHover={{ animationPlayState: "paused" }} 
+      >
+        {/* Double the items to create seamless loop */}
+        {[...items, ...items].map((item, idx) => (
+          <TestimonialCard key={`${item.name}-${idx}`} item={item} />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+// --- Animated Stats Number ---
+const AnimatedNumber = ({ value }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0, y: 10 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      {value}
+    </motion.span>
+  );
+};
+
+// --- Main Section ---
+const ProfessionalTestimonials = () => {
+  return (
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30 py-24 md:py-32">
+      
+      {/* --- Decorative Background Elements --- */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        
+        {/* Soft Blobs */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-indigo-400/10 rounded-full blur-[100px]"></div>
       </div>
 
-      {/* Gradient orbs */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl"></div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header Section */}
-        <div className="text-center mb-16 space-y-4">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 border border-blue-200/50">
-            <Award className="w-4 h-4 mr-2 text-blue-600" />
-            <span className="text-sm font-bold text-blue-700 tracking-wide">CLIENT TESTIMONIALS</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-            Trusted by Leading
-            <span className="block mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
-              Educational Institutions
-            </span>
-          </h2>
-          
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-medium">
-            Discover why hundreds of schools choose NextGen ERP for their management needs
-          </p>
-        </div>
-
-        {/* Desktop Infinite Scroll */}
-        <div className="hidden lg:block mb-16 overflow-hidden">
-          <div className="flex gap-6 animate-scroll-smooth">
-            {/* Original testimonials */}
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={`original-${idx}`}
-                onMouseEnter={() => setHoveredCard(idx)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className="relative group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden flex-shrink-0 w-96"
-              >
-              {/* Subtle gradient overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 opacity-0 transition-opacity duration-500 ${hoveredCard === idx ? 'opacity-100' : ''}`}></div>
-              
-              {/* Top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-              
-              <div className="relative z-10">
-                {/* Avatar with professional styling */}
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-md transform group-hover:scale-110 transition-transform duration-500">
-                    {testimonial.image}
-                  </div>
-                  <div className="ml-4 flex-1">
-                    <div className="font-bold text-gray-900 text-lg">{testimonial.name}</div>
-                    <div className="text-sm text-blue-600 font-semibold">{testimonial.role}</div>
-                  </div>
-                </div>
-                
-                {/* Quote icon */}
-                <div className="mb-4">
-                  <Quote className="w-8 h-8 text-blue-600/20" />
-                </div>
-                
-                {/* Content */}
-                <p className="text-gray-700 mb-6 leading-relaxed">
-                  {testimonial.content}
-                </p>
-                
-                {/* Rating */}
-                <div className="flex gap-1 pt-4 border-t border-gray-100">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className="w-5 h-5 text-amber-400 fill-current transform transition-transform duration-300"
-                      style={{ 
-                        transitionDelay: hoveredCard === idx ? `${i * 50}ms` : '0ms',
-                        transform: hoveredCard === idx ? 'scale(1.2)' : 'scale(1)'
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-            
-            {/* Duplicate testimonials for infinite scroll */}
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={`duplicate-${idx}`}
-                onMouseEnter={() => setHoveredCard(idx + testimonials.length)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className="relative group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden flex-shrink-0 w-96"
-              >
-                {/* Subtle gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 opacity-0 transition-opacity duration-500 ${hoveredCard === idx + testimonials.length ? 'opacity-100' : ''}`}></div>
-                
-                {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                
-                <div className="relative z-10">
-                  {/* Avatar with professional styling */}
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-md transform group-hover:scale-110 transition-transform duration-500">
-                      {testimonial.image}
-                    </div>
-                    <div className="ml-4 flex-1">
-                      <div className="font-bold text-gray-900 text-lg">{testimonial.name}</div>
-                      <div className="text-sm text-blue-600 font-semibold">{testimonial.role}</div>
-                    </div>
-                  </div>
-                  
-                  {/* Quote icon */}
-                  <div className="mb-4">
-                    <Quote className="w-8 h-8 text-blue-600/20" />
-                  </div>
-                  
-                  {/* Content */}
-                  <p className="text-gray-700 mb-6 leading-relaxed">
-                    {testimonial.content}
-                  </p>
-                  
-                  {/* Rating */}
-                  <div className="flex gap-1 pt-4 border-t border-gray-100">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className="w-5 h-5 text-amber-400 fill-current transform transition-transform duration-300"
-                        style={{ 
-                          transitionDelay: hoveredCard === idx + testimonials.length ? `${i * 50}ms` : '0ms',
-                          transform: hoveredCard === idx + testimonials.length ? 'scale(1.2)' : 'scale(1)'
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile/Tablet Carousel */}
-        <div className="lg:hidden relative mb-12">
-          <div className="overflow-hidden rounded-2xl">
-            <div 
-              className="flex transition-transform duration-700 ease-out"
-              style={{ 
-                transform: `translateX(-${currentIndex * 100}%)`,
-              }}
-            >
-              {testimonials.map((testimonial, idx) => (
-                <div key={idx} className="w-full flex-shrink-0 px-4">
-                  <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-100 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/30"></div>
-                    
-                    <div className="relative z-10">
-                      {/* Avatar */}
-                      <div className="flex justify-center mb-6">
-                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-4xl shadow-lg">
-                          {testimonial.image}
-                        </div>
-                      </div>
-                      
-                      {/* Quote */}
-                      <Quote className="w-10 h-10 text-blue-600/20 mb-4 mx-auto" />
-                      
-                      {/* Rating */}
-                      <div className="flex justify-center gap-1 mb-6">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 text-amber-400 fill-current" />
-                        ))}
-                      </div>
-                      
-                      {/* Content */}
-                      <p className="text-gray-700 mb-6 leading-relaxed text-center">
-                        {testimonial.content}
-                      </p>
-                      
-                      {/* Author */}
-                      <div className="text-center pt-6 border-t border-gray-200">
-                        <div className="font-bold text-gray-900 text-lg">{testimonial.name}</div>
-                        <div className="text-sm text-blue-600 font-semibold mt-1">{testimonial.role}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-center mt-8 gap-4">
-            <button 
-              onClick={prevTestimonial}
-              className="bg-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-700 group-hover:text-blue-600 transition-colors" />
-            </button>
-            
-            {/* Dots */}
-            <div className="flex gap-2">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => goToSlide(idx)}
-                  className={`transition-all duration-300 rounded-full ${
-                    idx === currentIndex 
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 w-8 h-2' 
-                      : 'bg-gray-300 hover:bg-gray-400 w-2 h-2'
-                  }`}
-                />
-              ))}
-            </div>
-            
-            <button 
-              onClick={nextTestimonial}
-              className="bg-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-700 group-hover:text-blue-600 transition-colors" />
-            </button>
-          </div>
-
-          {/* Play/Pause */}
-          <button
-            onClick={togglePlayPause}
-            className="absolute top-4 right-4 bg-white rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+        {/* --- Header --- */}
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-blue-100 shadow-sm mb-6"
           >
-            {isPlaying ? (
-              <Pause className="w-4 h-4 text-blue-600" />
-            ) : (
-              <Play className="w-4 h-4 text-blue-600" />
-            )}
-          </button>
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <span className="text-xs font-bold tracking-wide text-blue-800 uppercase">Trusted by Education Leaders</span>
+          </motion.div>
+
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6"
+          >
+            Loved by schools, <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600">
+               built for excellence.
+            </span>
+          </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed"
+          >
+            Join hundreds of forward-thinking institutions that have modernized their campus management with NextGen ERP.
+          </motion.p>
         </div>
 
-        {/* Stats Section - Professional Design */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
-          {[
-            { icon: Users, value: "500+", label: "Partner Schools", color: "from-blue-600 to-blue-700" },
-            { icon: TrendingUp, value: "50K+", label: "Active Students", color: "from-indigo-600 to-indigo-700" },
-            { icon: Award, value: "98%", label: "Satisfaction Rate", color: "from-blue-600 to-indigo-600" },
-            { icon: Clock, value: "24/7", label: "Expert Support", color: "from-indigo-600 to-blue-700" }
-          ].map((stat, idx) => {
-            const IconComponent = stat.icon;
+        {/* --- Marquee Section --- */}
+        <div className="relative -mx-4 md:-mx-0 mb-20">
+           <Marquee items={testimonials} speed={50} />
+        </div>
+
+        {/* --- Stats Grid (Bento Style) --- */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon;
             return (
-              <div 
+              <motion.div
                 key={idx}
-                className="relative group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${idx * 0.1}s both`
-                }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ y: -5 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, type: "spring", stiffness: 300 }}
+                className="relative bg-white/60 backdrop-blur-md rounded-2xl p-6 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 text-center group"
               >
-                {/* Gradient background on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                
-                <div className="relative z-10 text-center">
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} mb-4 shadow-lg transform group-hover:scale-110 transition-transform duration-500`}>
-                    <IconComponent className="w-6 h-6 text-white" />
-                  </div>
-                  <div className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600 font-semibold">{stat.label}</div>
+                <div className={cn("mx-auto w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 bg-white shadow-sm ring-1 ring-gray-100", stat.color)}>
+                  <Icon className="w-6 h-6" />
                 </div>
-              </div>
+                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
+                  <AnimatedNumber value={stat.value} />
+                </div>
+                <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                  {stat.label}
+                </div>
+              </motion.div>
             );
           })}
         </div>
+
+        {/* --- CTA Box --- */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-24 relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-700 shadow-2xl"
+        >
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+          
+          <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-2">Ready to transform your school?</h3>
+              <p className="text-blue-100 text-lg">Join the fastest growing education network today.</p>
+            </div>
+            <button className="group relative px-8 py-4 bg-white text-blue-700 font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-2">
+              Book a Demo
+              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </button>
+          </div>
+        </motion.div>
+
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes scroll-smooth {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .animate-scroll-smooth {
-          animation: scroll-smooth 35s linear infinite;
-        }
-
-        .animate-scroll-smooth:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 };
 
-export default TestimonialsCarousel;
+export default ProfessionalTestimonials;
