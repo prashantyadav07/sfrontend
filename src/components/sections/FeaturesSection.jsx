@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Users, GraduationCap, Calendar, DollarSign, MessageSquare, BarChart3, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const iconMap = {
   Users,
@@ -11,14 +11,13 @@ const iconMap = {
   BarChart3
 };
 
-// School ERP Data
 const features = [
   {
     iconName: 'Users',
     color: 'text-blue-600',
     title: 'Student Management',
     description: 'Comprehensive student profiles, attendance tracking, and academic records.',
-    tags: ['FULL TIME', 'DIGITAL', 'B2B']
+    tags: ['FULL TIME', 'DIGITAL']
   },
   {
     iconName: 'GraduationCap',
@@ -32,7 +31,7 @@ const features = [
     color: 'text-green-600',
     title: 'Smart Scheduling',
     description: 'Automated timetables, exam scheduling, and event management.',
-    tags: ['AUTOMATION', 'AI POWERED']
+    tags: ['AUTOMATION', 'AI']
   },
   {
     iconName: 'DollarSign',
@@ -46,124 +45,163 @@ const features = [
     color: 'text-pink-600',
     title: 'Communication Hub',
     description: 'Connect teachers, students, and parents through integrated messaging.',
-    tags: ['REAL-TIME', 'MOBILE APP']
+    tags: ['REAL-TIME', 'APP']
   },
   {
     iconName: 'BarChart3',
     color: 'text-indigo-600',
     title: 'Analytics & Reports',
     description: 'Data-driven insights and comprehensive reports to make informed decisions.',
-    tags: ['INSIGHTS', 'EXPORTABLE']
+    tags: ['INSIGHTS', 'DATA']
   }
 ];
 
-// Initial positions (Scattered look)
-const initialPositions = [
-  { x: -100, y: -80, r: -5 },
-  { x: 120, y: -100, r: 4 },
-  { x: -150, y: 50, r: -6 },
-  { x: 100, y: 80, r: 5 },
+// Desktop positions (Scattered layout)
+const desktopPositions = [
+  { x: -120, y: -90, r: -4 },
+  { x: 140, y: -110, r: 3 },
+  { x: -160, y: 60, r: -5 },
+  { x: 120, y: 90, r: 4 },
   { x: 0, y: 0, r: -2 },
-  { x: 180, y: 20, r: 3 },
+  { x: 190, y: 20, r: 2 },
 ];
 
 const SchoolFeatures = () => {
-  const containerRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkSize = () => {
+      // 1024px se upar hi "Floating" effect dikhega
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
+  if (!mounted) return null; // Hydration fix
 
   return (
-    <div className="min-h-screen bg-[#FEFEFE] overflow-hidden flex flex-col items-center justify-center relative p-4">
+    <div className="min-h-screen bg-[#FEFEFE] flex flex-col items-center justify-center relative p-4 overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-[20%] left-[20%] w-96 h-96 bg-yellow-200/20 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[20%] right-[20%] w-96 h-96 bg-blue-200/20 rounded-full blur-[100px]"></div>
+        <div className="absolute top-[10%] left-[10%] w-64 h-64 md:w-96 md:h-96 bg-yellow-200/20 rounded-full blur-[80px]"></div>
+        <div className="absolute bottom-[10%] right-[10%] w-64 h-64 md:w-96 md:h-96 bg-blue-200/20 rounded-full blur-[80px]"></div>
       </div>
 
       {/* HEADINGS */}
-      <div className="z-10 text-center mb-12 pointer-events-none max-w-3xl px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+      <div className="z-10 text-center mb-8 md:mb-12 max-w-4xl px-4 mt-8 md:mt-0">
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-5 leading-tight">
           Powerful Features for Modern Schools
         </h2>
-        <p className="text-lg text-gray-600 font-medium">
+        <p className="text-sm md:text-lg text-gray-600 font-medium max-w-2xl mx-auto">
           Everything you need to manage your educational institution efficiently
         </p>
       </div>
 
-      {/* Interactive Card Area */}
-      <div ref={containerRef} className="w-full max-w-7xl h-[70vh] flex items-center justify-center relative perspective-1000">
-        
-        {features.map((feature, idx) => {
-          const IconComponent = iconMap[feature.iconName];
-          const pos = initialPositions[idx] || { x: 0, y: 0, r: 0 };
+      {/* 
+        LOGIC SWITCH:
+        Hum 'AnimatePresence' aur 'key' ka use kar rahe hain taaki jab
+        Screen Size change ho, toh React pura structure re-render kare.
+        Isse "Gayab hone wala bug" fix ho jayega.
+      */}
+      <div className={`w-full max-w-7xl relative transition-all duration-500 ${isDesktop ? 'h-[650px] flex items-center justify-center' : 'h-auto block'}`}>
+        <AnimatePresence mode='wait'>
+          {features.map((feature, idx) => {
+            const IconComponent = iconMap[feature.iconName];
+            const pos = desktopPositions[idx] || { x: 0, y: 0, r: 0 };
 
-          return (
-            <motion.div
-              key={idx}
-              // Drag properties removed here 
-              
-              // Initial Placement
-              initial={{ x: pos.x, y: pos.y, rotate: pos.r }}
-              
-              // Continuous Floating Animation
-              animate={{ 
-                y: [pos.y - 15, pos.y + 15, pos.y - 15], 
-                rotate: [pos.r - 2, pos.r + 2, pos.r - 2],
-              }}
-              transition={{
-                duration: 5, // Smooth floating speed
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: idx * 0.5 // Staggered start so they don't move together
-              }}
+            return (
+              <motion.div
+                // Key change hone se React isko naya element maanta hai (Fixes positioning bugs)
+                key={`${isDesktop ? 'desktop' : 'mobile'}-${idx}`}
+                
+                // --- ANIMATION LOGIC ---
+                initial={isDesktop 
+                  ? { x: pos.x, y: pos.y, rotate: pos.r, opacity: 0, scale: 0.8 } // Laptop Start
+                  : { y: 50, opacity: 0, scale: 0.95 } // Mobile Start
+                }
+                
+                animate={isDesktop 
+                  ? { 
+                      y: [pos.y - 10, pos.y + 10, pos.y - 10], // Floating Effect
+                      rotate: [pos.r - 2, pos.r + 2, pos.r - 2],
+                      opacity: 1,
+                      scale: 1
+                    }
+                  : { 
+                      y: 0, // No Floating on Mobile (Fixes "One floating" issue)
+                      rotate: 0,
+                      opacity: 1,
+                      scale: 1
+                    }
+                }
+                
+                transition={isDesktop 
+                  ? {
+                      duration: 4 + idx, // Random speed for natural float
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      opacity: { duration: 0.8 }
+                    }
+                  : {
+                      duration: 0.5,
+                      delay: idx * 0.1, // Simple list animation
+                      ease: "easeOut"
+                    }
+                }
 
-              // Only Hover Interaction kept (removed drag interactions)
-              whileHover={{ scale: 1.05, zIndex: 50 }}
-              
-              className="absolute w-[290px] bg-[#fdfdfd] rounded-[24px] p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-white/60 flex flex-col justify-between select-none backdrop-blur-sm transition-shadow hover:shadow-xl"
-            >
-              {/* Card Header */}
-              <div className="flex items-center gap-3 mb-3">
-                <div className={`p-2 rounded-lg bg-gray-50 border border-gray-100 ${feature.color}`}>
-                  {IconComponent && <IconComponent size={18} />}
+                whileHover={isDesktop ? { scale: 1.05, zIndex: 50 } : { scale: 1.02 }}
+
+                // --- STYLING (Mobile vs Laptop) ---
+                className={`
+                  bg-[#fdfdfd] border border-white/60 shadow-sm backdrop-blur-sm
+                  flex flex-col justify-between group
+                  
+                  ${isDesktop 
+                    ? 'absolute w-[280px] rounded-[24px] p-5 shadow-xl'  // Laptop Style
+                    : 'relative w-full mb-4 rounded-xl p-4 min-h-[160px]' // Mobile Style (Grid/List)
+                  }
+                `}
+              >
+                {/* Card Content */}
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`p-2 rounded-lg bg-gray-50 border border-gray-100 ${feature.color}`}>
+                      {IconComponent && <IconComponent size={isDesktop ? 20 : 18} />}
+                    </div>
+                    <span className="font-bold text-gray-400 text-[10px] tracking-widest uppercase">
+                      ERP Module
+                    </span>
+                  </div>
+
+                  <h3 className={`font-bold text-gray-900 leading-tight mb-2 ${isDesktop ? 'text-lg' : 'text-base'}`}>
+                    {feature.title}
+                  </h3>
+                  <p className={`text-gray-500 font-medium leading-relaxed ${isDesktop ? 'text-sm' : 'text-xs'}`}>
+                    {feature.description}
+                  </p>
                 </div>
-                <span className="font-bold text-gray-600 text-xs tracking-wide uppercase">SchoolERP</span>
-              </div>
 
-              {/* Card Body */}
-              <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-900 leading-tight mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-5">
-                {feature.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-2.5 py-1 text-[10px] font-bold text-slate-500 bg-gray-100 rounded-md border border-gray-200 uppercase"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Footer: Learn More */}
-              <div className="pt-4 border-t border-gray-100 flex justify-between items-center group cursor-pointer">
-                <span className="text-sm font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
-                  Learn more
-                </span>
-                <ArrowRight className="w-4 h-4 text-blue-600 transform group-hover:translate-x-1 transition-transform" />
-              </div>
-
-              {/* Glossy Overlay */}
-              <div className="absolute inset-0 rounded-[24px] bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
-            </motion.div>
-          );
-        })}
+                {/* Tags & Link */}
+                <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                   <div className="flex gap-2">
+                     {feature.tags.map((tag, i) => (
+                       <span key={i} className="text-[9px] font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded border border-gray-200">
+                         {tag}
+                       </span>
+                     ))}
+                   </div>
+                   <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-blue-600 transition-colors" />
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </div>
     </div>
   );
