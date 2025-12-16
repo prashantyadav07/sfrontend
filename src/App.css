@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('./assets/sf-pro-text_regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  font-family: 'SF Pro Text', system-ui, -apple-system, sans-serif;
+}
+
+body, html {
+  font-family: 'SF Pro Text', system-ui, -apple-system, sans-serif;
+}
