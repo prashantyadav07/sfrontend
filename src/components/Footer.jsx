@@ -1,251 +1,215 @@
-import React, { useState } from 'react';
-import { School, Mail, ArrowRight, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Points, PointMaterial } from '@react-three/drei';
+import * as random from 'maath/random/dist/maath-random.esm';
+import { 
+  School, ArrowRight, Twitter, Linkedin, Github, 
+  Sparkles, ChevronRight 
+} from 'lucide-react';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-const Footer = () => {
-  const [hoveredLink, setHoveredLink] = useState(null);
+// --- Utility ---
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
 
-  const footerLinks = {
-    product: [
-      { name: 'Features', href: '#features' },
-      { name: 'Pricing', href: '#pricing' },
-      { name: 'Demo', href: '#demo' }
-    ],
-    company: [
-      { name: 'About', href: '#about' },
-      { name: 'Blog', href: '#blog' },
-      { name: 'Contact', href: '#contact' }
-    ],
-    support: [
-      { name: 'Help Center', href: '#help' },
-      { name: 'Documentation', href: '#docs' },
-      { name: 'Training', href: '#training' }
-    ]
-  };
+// --- 3D Background (Only for Desktop) ---
+const ParticleRing = (props) => {
+  const ref = useRef();
+  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }));
 
-  const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook', color: 'hover:bg-blue-600' },
-    { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:bg-sky-500' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn', color: 'hover:bg-blue-700' },
-    { icon: Instagram, href: '#', label: 'Instagram', color: 'hover:bg-pink-600' }
-  ];
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x -= delta / 15;
+      ref.current.rotation.y -= delta / 20;
+    }
+  });
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 overflow-hidden">
-      
-      {/* Animated gradient orbs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl animate-float-delayed"></div>
-      
-      {/* Animated grid pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div className="absolute inset-0 animate-grid-move" style={{
-          backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }}></div>
-      </div>
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
+        <PointMaterial
+          transparent
+          color="#3b82f6"
+          size={0.003}
+          sizeAttenuation={true}
+          depthWrite={false}
+          opacity={0.8}
+        />
+      </Points>
+    </group>
+  );
+};
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float-particle ${5 + Math.random() * 5}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
+// --- Spotlight Card ---
+const SpotlightCard = ({ children, className = "" }) => {
+  const divRef = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  const handleMouseMove = (e) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={cn(
+        "relative overflow-hidden rounded-xl border border-white/10 bg-gray-900/80 text-gray-200 shadow-2xl",
+        className
+      )}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59,130,246,0.1), transparent 40%)`,
+        }}
+      />
+      <div className="relative h-full z-10">{children}</div>
+    </div>
+  );
+};
+
+// --- MAIN FOOTER ---
+const Footer = () => {
+  return (
+    <footer className="relative w-full border-t border-white/10 bg-[#050505] overflow-hidden antialiased font-sans">
+      
+      {/* 1. BACKGROUND LAYERS */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Sharp Grid Pattern (Common for both) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         
-        {/* Main Footer Content */}
-        <div className="grid md:grid-cols-5 gap-8 mb-8">
-          
-          {/* Brand Section */}
-          <div className="md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-xl shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                  <School className="w-6 h-6 text-white" />
-                </div>
-              </div>
-              <span className="text-xl font-bold text-white">NextGen ERP</span>
-            </div>
-            <p className="text-sm text-gray-400 mb-4 max-w-sm leading-relaxed">
-              Complete school management solution trusted by 500+ institutions across India.
-            </p>
-            
-            {/* Contact */}
-            <div className="flex items-center gap-2 text-sm group cursor-pointer mb-4">
-              <div className="p-1.5 bg-gray-800 rounded-lg group-hover:bg-blue-600/20 transition-colors">
-                <Mail className="w-3.5 h-3.5 text-blue-400" />
-              </div>
-              <span className="text-gray-400 group-hover:text-blue-400 transition-colors">contact@nextgenerp.com</span>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-2">
-              {socialLinks.map((social, idx) => {
-                const IconComponent = social.icon;
-                return (
-                  <a
-                    key={idx}
-                    href={social.href}
-                    aria-label={social.label}
-                    className={`p-2 bg-gray-800 rounded-lg hover:text-white transition-all duration-300 transform hover:scale-110 ${social.color}`}
-                  >
-                    <IconComponent className="w-4 h-4" />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Product Links */}
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Product</h4>
-            <ul className="space-y-2">
-              {footerLinks.product.map((link, idx) => (
-                <li key={idx}>
-                  <a
-                    href={link.href}
-                    onMouseEnter={() => setHoveredLink(`product-${idx}`)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    className="text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"
-                  >
-                    <ArrowRight className={`w-3 h-3 transform transition-all duration-300 ${hoveredLink === `product-${idx}` ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'}`} />
-                    <span>{link.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links */}
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Company</h4>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link, idx) => (
-                <li key={idx}>
-                  <a
-                    href={link.href}
-                    onMouseEnter={() => setHoveredLink(`company-${idx}`)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    className="text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"
-                  >
-                    <ArrowRight className={`w-3 h-3 transform transition-all duration-300 ${hoveredLink === `company-${idx}` ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'}`} />
-                    <span>{link.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support Links */}
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Support</h4>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link, idx) => (
-                <li key={idx}>
-                  <a
-                    href={link.href}
-                    onMouseEnter={() => setHoveredLink(`support-${idx}`)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    className="text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"
-                  >
-                    <ArrowRight className={`w-3 h-3 transform transition-all duration-300 ${hoveredLink === `support-${idx}` ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'}`} />
-                    <span>{link.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* DESKTOP ONLY: 3D Animation (Hidden on Mobile for Sharpness) */}
+        <div className="hidden lg:block absolute top-[-20%] right-[-10%] w-[600px] h-[600px] opacity-60">
+          <Canvas camera={{ position: [0, 0, 1] }} dpr={[1, 2]}> 
+            <ParticleRing />
+          </Canvas>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-gray-400">
-            © 2024 <span className="text-white font-semibold">NextGen ERP</span>. All rights reserved.
-          </div>
-          
-          <div className="flex gap-6 text-xs text-gray-400">
-            <a href="#privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
-            <a href="#terms" className="hover:text-blue-400 transition-colors">Terms</a>
-            <a href="#cookies" className="hover:text-blue-400 transition-colors">Cookies</a>
-          </div>
-        </div>
+        {/* MOBILE ONLY: Sharp Gradient (Replaces 3D for clarity) */}
+        <div className="block lg:hidden absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full" />
+        
+        {/* Bottom Glow */}
+        <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-blue-600/5 blur-[60px]" />
       </div>
 
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(30px, -30px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-        }
+      {/* 2. MAIN CONTENT */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 py-8 lg:py-12">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+          
+          {/* BRAND SECTION */}
+          {/* Desktop: Full Info | Mobile: Compact Header */}
+          <div className="lg:col-span-3 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600/10 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                <School className="h-4 w-4 text-blue-400" />
+              </div>
+              <div>
+                <span className="text-lg font-bold text-white tracking-wide block">NextGen ERP</span>
+                {/* Mobile specific sub-text for flair */}
+                <span className="lg:hidden text-[10px] text-blue-400 font-mono tracking-widest">SYSTEM ONLINE</span>
+              </div>
+            </div>
+            
+            {/* Description: Visible on Desktop, Hidden on Mobile to save height */}
+            <p className="hidden lg:block text-sm text-gray-400 leading-relaxed font-medium">
+              The advanced operating system for modern educational institutions. 
+              Automate via our neural architecture.
+            </p>
+          </div>
 
-        @keyframes float-delayed {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(-30px, 30px) scale(1.1);
-          }
-          66% {
-            transform: translate(20px, -20px) scale(0.9);
-          }
-        }
+          {/* LINKS SECTION */}
+          {/* Desktop: 3 Columns | Mobile: 2 Columns TIGHT Grid */}
+          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6 lg:gap-8">
+            {[
+              { title: 'Platform', items: ['Intelligence', 'Workflow', 'Analytics'] },
+              { title: 'Company', items: ['Mission', 'Careers', 'Contact'] },
+              { title: 'Legal', items: ['Privacy', 'Terms', 'Security'] },
+            ].map((section) => (
+              <div key={section.title}>
+                <h4 className="text-[11px] lg:text-xs font-bold text-white mb-3 uppercase tracking-widest opacity-80">
+                  {section.title}
+                </h4>
+                <ul className="space-y-2 lg:space-y-3">
+                  {section.items.map((item) => (
+                    <li key={item}>
+                      <a 
+                        href="#" 
+                        className="text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1 group"
+                      >
+                        {/* Hover Chevron only on Desktop */}
+                        <ChevronRight className="hidden lg:block w-3 h-3 text-blue-500 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                        {item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
-        @keyframes grid-move {
-          0% {
-            transform: translate(0, 0);
-          }
-          100% {
-            transform: translate(50px, 50px);
-          }
-        }
+          {/* NEWSLETTER SECTION */}
+          {/* Desktop: Big Card | Mobile: Slim Row */}
+          <div className="lg:col-span-4">
+            <SpotlightCard className="p-4 lg:p-5 bg-gray-900/40 backdrop-blur-sm border-white/5">
+              <div className="flex flex-col gap-3 lg:gap-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+                  <span className="text-xs lg:text-sm font-semibold text-white">Join the ecosystem</span>
+                </div>
+                
+                {/* Mobile Optimized Input Group */}
+                <div className="relative flex w-full">
+                  <input
+                    type="email"
+                    placeholder="Enter email..."
+                    className="w-full bg-black/50 border border-gray-700 text-xs lg:text-sm text-white placeholder-gray-500 rounded-l-lg py-2.5 pl-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+                  />
+                  <button className="bg-blue-600 hover:bg-blue-500 text-white rounded-r-lg px-4 transition-colors flex items-center justify-center border-t border-b border-r border-blue-500">
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+                
+                <p className="hidden lg:block text-xs text-gray-500">
+                  Secure transmission. No spam protocols active.
+                </p>
+              </div>
+            </SpotlightCard>
+          </div>
+        </div>
 
-        @keyframes float-particle {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          50% {
-            transform: translateY(-100px) translateX(50px);
-          }
-        }
+        {/* BOTTOM BAR */}
+        <div className="mt-8 lg:mt-12 pt-6 border-t border-white/5 flex flex-col-reverse md:flex-row justify-between items-center gap-4">
+          
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-[10px] lg:text-xs text-gray-500 font-medium font-mono">
+            <span>© 2025 NEXTGEN INC.</span>
+            <span className="hidden md:inline">///</span>
+            <span>STATUS: OPTIMAL</span>
+          </div>
 
-        .animate-float {
-          animation: float 20s ease-in-out infinite;
-        }
+          <div className="flex gap-5">
+            {[Twitter, Github, Linkedin].map((Icon, i) => (
+              <a 
+                key={i} 
+                href="#" 
+                className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform"
+              >
+                <Icon className="w-4 h-4" />
+              </a>
+            ))}
+          </div>
 
-        .animate-float-delayed {
-          animation: float-delayed 25s ease-in-out infinite;
-        }
-
-        .animate-grid-move {
-          animation: grid-move 30s linear infinite;
-        }
-      `}</style>
+        </div>
+      </div>
     </footer>
   );
 };
