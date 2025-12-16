@@ -5,7 +5,7 @@ import HeroSection from '../components/sections/HeroSection';
 import StatsSection from '../components/sections/StatsSection';
 import FeaturesSection from '../components/sections/FeaturesSection';
 import ModulesCarousel from '../components/sections/ModulesCarousel';
-import PricingSection from '../components/sections/PricingSection';
+
 import TestimonialsCarousel from '../components/sections/TestimonialsCarousel';
 import CTASection from '../components/sections/CTASection';
 import Footer from '../components/Footer';
@@ -25,7 +25,7 @@ const SchoolERP = () => {
       <StatsSection />
       <FeaturesSection />
       <ModulesCarousel />
-      <PricingSection />
+    
       <TestimonialsCarousel />
       <CTASection />
       <Footer />

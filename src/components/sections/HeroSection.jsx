@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { ArrowRight, Play, CheckCircle, Users, GraduationCap, Calendar, DollarSign, MessageSquare, BarChart3 } from 'lucide-react';
 import { features } from '../../data/schoolERPData';
 import { AuroraText } from '@/components/ui/aurora-text';
+import editedImage from '../../assets/edited.jpeg';
+
 
 const iconMap = {
   Users,
@@ -56,7 +58,7 @@ const HeroSection = ({ heroRef }) => {
           <div className="animate-on-scroll relative">
             <div className="transform hover:scale-105 transition duration-500 overflow-hidden max-w-xl mx-auto">
               <img 
-                src="src/assets/edited.jpeg" 
+                src={editedImage} 
                 alt="School ERP Dashboard" 
                 className="w-full h-auto rounded-3xl object-cover"
                 style={{ maxHeight: '600px' }}
