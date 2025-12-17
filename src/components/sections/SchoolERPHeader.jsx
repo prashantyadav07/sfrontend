@@ -1,32 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, School, ChevronRight } from 'lucide-react';
+import { School, Menu, X, Phone, ChevronRight } from 'lucide-react';
 
 const SchoolERPHeader = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  // 1. Scroll Detection Logic
+  const centerNavItems = [
+    { name: 'Features', id: 'features' },
+    { name: 'Modules', id: 'modules' },
+    { name: 'Testimonials', id: 'testimonials' },
+  ];
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+
+      if (isMenuOpen) {
+        setIsVisible(true);
+        return;
+      }
+
+      if (Math.abs(currentScrollY - lastScrollY) < 10) return;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
-  // 2. Scroll to Top (Logo Click)
-  const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY, isMenuOpen]);
 
-  // 3. Smooth Scroll to Section
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     
     if (element) {
-      const headerOffset = 100;
+      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -38,108 +53,118 @@ const SchoolERPHeader = () => {
     }
   };
 
-  const navItems = ['Features', 'Modules', 'Testimonials', 'Contact'];
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
-      {/* MAIN HEADER
-        Update:
-        - Used 'fixed' instead of 'absolute'.
-        - Ab ye mobile aur desktop dono par screen k top par stick rahega.
-      */}
       <header 
-        className={`fixed z-50 left-1/2 -translate-x-1/2 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-          w-[90%] md:w-[80%] lg:w-[75%] max-w-5xl
-          ${isScrolled 
-            ? 'top-4 bg-white/90 shadow-2xl border-white/50 py-2' // Scroll karne par thoda compact ho jayega
-            : 'top-6 bg-white/95 border-white/40 shadow-xl py-3'  // Shuru me thoda niche rahega
-          }
-          rounded-full 
-          border backdrop-blur-xl
+        style={{
+          transform: (isVisible || isMenuOpen) 
+            ? 'translateX(-50%) translateY(0)' 
+            : 'translateX(-50%) translateY(-150%)'
+        }}
+        className={`fixed z-50 left-1/2 
+          w-[95%] md:w-[90%] lg:w-[80%] max-w-6xl
+          transition-all duration-500 ease-in-out
+          top-4 md:top-6
+          bg-white/90 backdrop-blur-md shadow-lg border border-white/40 
+          ${isMenuOpen ? 'rounded-3xl' : 'rounded-full'}
+          py-2 md:py-3
         `}
       >
-        {/* Inner Container */}
-        <div className="px-4 md:px-8">
+        <div className="px-4 md:px-6 relative">
           <div className="flex justify-between items-center">
             
-            {/* LOGO SECTION */}
+            {/* 1. LOGO SECTION (Fixed: Text visible on Mobile now) */}
             <div 
               onClick={handleLogoClick}
-              className="flex items-center gap-2 md:gap-3 cursor-pointer select-none group"
+              className="flex items-center gap-2 cursor-pointer select-none group z-10"
             >
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              {/* Icon */}
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-1.5 rounded-lg shadow-md group-hover:scale-105 transition-transform">
                 <School className="w-5 h-5 text-white" />
               </div>
+              
+              {/* Text - Removed 'hidden', added flex-col layout */}
               <div className="flex flex-col">
-                <span className="text-lg font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent leading-none">
+                <span className="text-base md:text-lg font-bold text-gray-900 leading-none">
                   NextGen
                 </span>
-                <span className="text-[9px] font-extrabold text-blue-600 tracking-[0.2em] uppercase mt-0.5">
+                <span className="text-[8px] md:text-[9px] font-bold text-blue-600 tracking-wider uppercase">
                   ERP System
                 </span>
               </div>
             </div>
 
-            {/* DESKTOP NAVIGATION */}
-            <nav className="hidden lg:flex items-center bg-gray-100/60 p-1 rounded-full border border-gray-200/50 ml-4">
-              {navItems.map((item) => (
+            {/* 2. CENTER NAVIGATION (Hidden on Mobile, Visible on Desktop) */}
+            <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 bg-gray-100/50 p-1 rounded-full border border-gray-200/50">
+              {centerNavItems.map((item) => (
                 <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={(e) => scrollToSection(e, item.toLowerCase())}
-                  className="px-5 py-2 text-xs font-bold text-gray-600 hover:text-blue-700 hover:bg-white hover:shadow-md rounded-full transition-all duration-300 ease-out"
+                  key={item.name}
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToSection(e, item.id)}
+                  className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-white hover:shadow-sm rounded-full transition-all duration-300"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ))}
             </nav>
 
-            {/* RIGHT SIDE BUTTON */}
-            <div className="hidden lg:flex items-center">
-              <button className="px-6 py-2.5 text-xs bg-gray-900 text-white font-bold rounded-full hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 group">
-                Get Started 
-                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform"/>
+            {/* 3. RIGHT SIDE */}
+            <div className="flex items-center gap-3 z-10">
+              {/* Desktop Contact Button */}
+              <button 
+                 onClick={(e) => scrollToSection(e, 'cta')}
+                 className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm bg-gray-900 text-white font-bold rounded-full hover:bg-black hover:scale-105 transition-all shadow-md"
+              >
+                <Phone size={14} />
+                <span>Contact Us</span>
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 bg-gray-100 rounded-full hover:bg-gray-200 text-gray-700 transition-colors"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
 
-            {/* MOBILE MENU TOGGLE */}
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)} 
-              className="lg:hidden p-2 bg-gray-100/80 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors active:scale-95"
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
           </div>
 
-          {/* MOBILE MENU EXPANDABLE */}
+          {/* MOBILE MENU DROPDOWN */}
           <div 
-            className={`lg:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-              isMenuOpen ? 'max-h-[500px] opacity-100 mt-4 pb-2' : 'max-h-0 opacity-0'
+            className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+              isMenuOpen ? 'max-h-[350px] opacity-100 mt-4 pb-2' : 'max-h-0 opacity-0'
             }`}
           >
-            <nav className="flex flex-col space-y-1 pt-2 border-t border-gray-100">
-              {navItems.map((item) => (
+            <nav className="flex flex-col space-y-2 pt-4 border-t border-gray-100">
+              {centerNavItems.map((item) => (
                 <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={(e) => scrollToSection(e, item.toLowerCase())}
-                  className="p-3 text-center text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50/80 rounded-xl transition-all"
+                  key={item.name}
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToSection(e, item.id)}
+                  className="block p-3 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50 rounded-xl transition-all"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ))}
-              <div className="pt-3 px-1">
-                <button className="w-full py-3 text-sm font-bold text-white bg-gray-900 hover:bg-black rounded-xl shadow-lg transition-all">
-                  Get Started Free
-                </button>
-              </div>
+              <button 
+                onClick={(e) => scrollToSection(e, 'cta')}
+                className="w-full mt-2 flex items-center justify-center gap-2 p-3 bg-blue-600 text-white font-bold rounded-xl active:scale-95 transition-all"
+              >
+                Contact Us
+                <ChevronRight size={16} />
+              </button>
             </nav>
           </div>
         </div>
       </header>
 
-      {/* SPACER DIV - Isko bada rakha hai taaki content header ke niche na chupe */}
-      <div className="h-32 md:h-40 w-full"></div>
+      <div className="h-24 w-full"></div>
     </>
   );
 };

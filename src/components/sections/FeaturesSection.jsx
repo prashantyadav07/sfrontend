@@ -1,89 +1,137 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Users, GraduationCap, Calendar, DollarSign, MessageSquare, BarChart3, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, GraduationCap, Bus, DollarSign, Smartphone, BarChart3, ArrowRight, BookOpen, Briefcase } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const iconMap = {
   Users,
   GraduationCap,
-  Calendar,
+  Bus,
   DollarSign,
-  MessageSquare,
-  BarChart3
+  Smartphone,
+  BarChart3,
+  BookOpen,
+  Briefcase
 };
 
 const features = [
   {
     iconName: 'Users',
-    color: 'text-blue-600',
     title: 'Student Management',
     description: 'Comprehensive profiles, attendance tracking, and records.',
-    tags: ['FULL TIME', 'DIGITAL']
+    tags: ['FULL TIME', 'DIGITAL'],
+    gradient: 'from-blue-50/90 via-white/80 to-blue-100/90',
+    border: 'border-blue-200/50',
+    iconColor: 'text-blue-600',
+    tagBg: 'bg-blue-100/50 text-blue-700'
   },
   {
     iconName: 'GraduationCap',
-    color: 'text-purple-600',
     title: 'Academic Excellence',
     description: 'Manage curriculum, assignments, grades, and performance.',
-    tags: ['PROJECT', 'REMOTE']
+    tags: ['PROJECT', 'REMOTE'],
+    gradient: 'from-purple-50/90 via-white/80 to-fuchsia-100/90',
+    border: 'border-purple-200/50',
+    iconColor: 'text-purple-600',
+    tagBg: 'bg-purple-100/50 text-purple-700'
   },
   {
-    iconName: 'Calendar',
-    color: 'text-green-600',
-    title: 'Smart Scheduling',
-    description: 'Automated timetables, exam scheduling, and events.',
-    tags: ['AUTOMATION', 'AI']
+    iconName: 'Bus',
+    title: 'Live Bus Tracking',
+    description: 'Real-time GPS tracking for school buses and transport.',
+    tags: ['GPS', 'SAFETY'],
+    gradient: 'from-emerald-50/90 via-white/80 to-teal-100/90',
+    border: 'border-emerald-200/50',
+    iconColor: 'text-emerald-600',
+    tagBg: 'bg-emerald-100/50 text-emerald-700'
   },
   {
     iconName: 'DollarSign',
-    color: 'text-yellow-600',
     title: 'Finance & Fee',
     description: 'Handle fee collection, expenses, and financial reports.',
-    tags: ['ACCOUNTS', 'SECURE']
+    tags: ['ACCOUNTS', 'SECURE'],
+    gradient: 'from-amber-50/90 via-white/80 to-orange-100/90',
+    border: 'border-amber-200/50',
+    iconColor: 'text-amber-600',
+    tagBg: 'bg-amber-100/50 text-amber-700'
   },
   {
-    iconName: 'MessageSquare',
-    color: 'text-pink-600',
-    title: 'Communication Hub',
-    description: 'Connect teachers, students, and parents easily.',
-    tags: ['REAL-TIME', 'APP']
+    iconName: 'Smartphone',
+    title: 'Dedicated Mobile Apps',
+    description: 'Custom apps for parents, students, and staff members.',
+    tags: ['IOS', 'ANDROID'],
+    gradient: 'from-rose-50/90 via-white/80 to-pink-100/90',
+    border: 'border-pink-200/50',
+    iconColor: 'text-pink-600',
+    tagBg: 'bg-pink-100/50 text-pink-700'
   },
   {
     iconName: 'BarChart3',
-    color: 'text-indigo-600',
     title: 'Analytics & Reports',
     description: 'Data-driven insights to make informed decisions.',
-    tags: ['INSIGHTS', 'DATA']
+    tags: ['INSIGHTS', 'DATA'],
+    gradient: 'from-indigo-50/90 via-white/80 to-violet-100/90',
+    border: 'border-indigo-200/50',
+    iconColor: 'text-indigo-600',
+    tagBg: 'bg-indigo-100/50 text-indigo-700'
+  },
+  {
+    iconName: 'BookOpen',
+    title: 'Library Management',
+    description: 'Track book inventory, issues, returns and digital catalog.',
+    tags: ['LMS', 'BOOKS'],
+    gradient: 'from-cyan-50/90 via-white/80 to-sky-100/90',
+    border: 'border-cyan-200/50',
+    iconColor: 'text-cyan-600',
+    tagBg: 'bg-cyan-100/50 text-cyan-700'
+  },
+  {
+    iconName: 'Briefcase',
+    title: 'HR & Payroll',
+    description: 'Manage staff attendance, leave requests and salary slips.',
+    tags: ['STAFF', 'PAYROLL'],
+    gradient: 'from-red-50/90 via-white/80 to-orange-100/90',
+    border: 'border-red-200/50',
+    iconColor: 'text-red-600',
+    tagBg: 'bg-red-100/50 text-red-700'
   }
 ];
 
-// --- 1. DESKTOP POSITIONS (UNTOUCHED) ---
+// --- 1. DESKTOP POSITIONS (BALANCED CLUSTER) ---
+// Brought closer (X range reduced from 380 to 280)
+// Added a center card and a top peak to fill gaps
 const desktopPositions = [
-  { x: -120, y: -90, r: -4 },
-  { x: 140, y: -110, r: 3 },
-  { x: -160, y: 60, r: -5 },
-  { x: 120, y: 90, r: 4 },
-  { x: 0, y: 0, r: -2 },
-  { x: 190, y: 20, r: 2 },
+  { x: -220, y: -160, r: -4 }, // Top Left
+  { x: 220, y: -160, r: 3 },   // Top Right
+  { x: -280, y: 30, r: -2 },   // Mid Left (Outer)
+  { x: 280, y: 30, r: 2 },     // Mid Right (Outer)
+  { x: -110, y: 170, r: -3 },  // Bottom Left (Inner)
+  { x: 110, y: 170, r: 3 },    // Bottom Right (Inner)
+  { x: 0, y: -40, r: 0 },      // DEAD CENTER (Fills the gap)
+  { x: 0, y: -270, r: 0 },     // TOP PEAK (Creates height)
 ];
 
-// --- 2. TABLET POSITIONS (UNTOUCHED) ---
+// --- 2. TABLET POSITIONS (TIGHTER GRID) ---
 const tabletPositions = [
-  { x: -160, y: -180, r: -3 }, 
-  { x: 160, y: -180, r: 3 },  
-  { x: 0, y: -50, r: 0 },     
-  { x: -180, y: 100, r: 4 },  
-  { x: 180, y: 100, r: -4 },  
-  { x: 0, y: 220, r: 2 },     
+  { x: -160, y: -280, r: -3 }, 
+  { x: 160, y: -280, r: 3 },  
+  { x: -200, y: -80, r: 2 },  
+  { x: 200, y: -80, r: -2 },
+  { x: -160, y: 120, r: -3 },
+  { x: 160, y: 120, r: 3 },
+  { x: 0, y: 300, r: 0 },     // Bottom
+  { x: 0, y: -420, r: 0 },    // Top
 ];
 
-// --- 3. MOBILE POSITIONS (UNTOUCHED) ---
+// --- 3. MOBILE POSITIONS (VERTICAL STACK) ---
 const mobilePositions = [
-  { x: 0, y: -400, r: -2 },
-  { x: 0, y: -240, r: 2 },
-  { x: 0, y: -80, r: -1 },
-  { x: 0, y: 80, r: 1 },
-  { x: 0, y: 240, r: -2 },
-  { x: 0, y: 400, r: 2 },
+  { x: 0, y: -560, r: -2 },
+  { x: 0, y: -400, r: 2 },
+  { x: 0, y: -240, r: -1 },
+  { x: 0, y: -80, r: 1 },
+  { x: 0, y: 80, r: -2 },
+  { x: 0, y: 240, r: 2 },
+  { x: 0, y: 400, r: -1 },
+  { x: 0, y: 560, r: 1 },
 ];
 
 const SchoolFeatures = () => {
@@ -111,17 +159,15 @@ const SchoolFeatures = () => {
   if (!mounted) return null;
 
   const getPosition = (index) => {
-    if (screenMode === 'desktop') return desktopPositions[index];
-    if (screenMode === 'tablet') return tabletPositions[index];
-    return mobilePositions[index];
+    const safeIndex = index % 8; 
+    if (screenMode === 'desktop') return desktopPositions[safeIndex];
+    if (screenMode === 'tablet') return tabletPositions[safeIndex];
+    return mobilePositions[safeIndex];
   };
 
-  // CHANGE: Reduced heights to remove excess vertical space
-  // Mobile: 1000px (was 1100), Tablet: 600px (was 800), Desktop: 500px (was 650)
-  const containerHeight = screenMode === 'mobile' ? 'h-[1000px]' : screenMode === 'tablet' ? 'h-[600px]' : 'h-[500px]';
+  const containerHeight = screenMode === 'mobile' ? 'h-[1400px]' : screenMode === 'tablet' ? 'h-[900px]' : 'h-[650px]';
 
   return (
-    // CHANGE: Removed 'min-h-screen', added 'py-10' to reduce top/bottom gaps
     <div className="w-full bg-[#FEFEFE] flex flex-col items-center justify-start relative p-4 py-10 md:py-20 overflow-hidden">
       
       {/* Background Ambience */}
@@ -130,7 +176,6 @@ const SchoolFeatures = () => {
         <div className="absolute bottom-[10%] right-[10%] w-64 h-64 md:w-96 md:h-96 bg-blue-200/20 rounded-full blur-[80px]"></div>
       </div>
 
-      {/* HEADINGS */}
       <div className="z-10 text-center mb-4 md:mb-8 max-w-4xl px-4 relative">
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4 leading-tight">
           Powerful Features
@@ -140,17 +185,19 @@ const SchoolFeatures = () => {
         </p>
       </div>
 
-      {/* CONTAINER AREA */}
       <div className={`w-full max-w-7xl relative transition-all duration-500 flex items-center justify-center ${containerHeight}`}>
         <AnimatePresence mode='wait'>
           {features.map((feature, idx) => {
             const IconComponent = iconMap[feature.iconName];
             const pos = getPosition(idx);
 
+            const isEven = idx % 2 === 0;
+            const floatX = isEven ? 10 : -10; // Reduced float distance slightly for cleaner look
+            const floatY = isEven ? -10 : 10;
+
             return (
               <motion.div
                 key={`${screenMode}-${idx}`}
-                
                 initial={{ 
                   x: pos.x, 
                   y: pos.y + 50, 
@@ -158,60 +205,60 @@ const SchoolFeatures = () => {
                   opacity: 0, 
                   scale: 0.8 
                 }}
-                
                 animate={{ 
-                  x: pos.x, 
-                  y: [pos.y - 10, pos.y + 10, pos.y - 10], 
-                  rotate: [pos.r - 2, pos.r + 2, pos.r - 2],
+                  x: [pos.x, pos.x + floatX, pos.x - (floatX/2), pos.x], 
+                  y: [pos.y, pos.y + floatY, pos.y - (floatY/2), pos.y], 
+                  rotate: [pos.r, pos.r - 2, pos.r + 2, pos.r],
                   opacity: 1,
                   scale: 1
                 }}
-                
                 transition={{
-                  duration: 4 + idx, 
+                  duration: 6 + idx, 
                   repeat: Infinity,
                   ease: "easeInOut",
                   opacity: { duration: 0.8 },
                   scale: { duration: 0.8 }
                 }}
-
                 whileHover={{ scale: 1.05, zIndex: 50 }}
-
                 className={`
                   absolute
-                  bg-[#fdfdfd] border border-white/60 shadow-sm backdrop-blur-sm
+                  bg-gradient-to-br ${feature.gradient}
+                  border ${feature.border}
+                  backdrop-blur-md shadow-lg
                   flex flex-col justify-between group
-                  rounded-[24px] p-5 shadow-xl
+                  rounded-[32px] p-6
                   ${screenMode === 'desktop' ? 'w-[280px]' : 'w-[90%] max-w-[300px]'}
                 `}
               >
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`p-2 rounded-lg bg-gray-50 border border-gray-100 ${feature.color}`}>
-                      {IconComponent && <IconComponent size={20} />}
+                    <div className={`p-2.5 rounded-xl bg-white shadow-sm ${feature.iconColor}`}>
+                      {IconComponent && <IconComponent size={22} />}
                     </div>
-                    <span className="font-bold text-gray-400 text-[10px] tracking-widest uppercase">
+                    <span className="font-bold text-gray-500/80 text-[10px] tracking-widest uppercase">
                       ERP Module
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-gray-900 text-lg leading-tight mb-2">
+                  <h3 className="font-bold text-gray-800 text-xl leading-tight mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-500 font-medium text-xs md:text-sm leading-relaxed">
+                  <p className="text-gray-600 font-medium text-xs md:text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                <div className="mt-5 pt-4 border-t border-white/40 flex justify-between items-center">
                    <div className="flex gap-2 flex-wrap">
                      {feature.tags.map((tag, i) => (
-                       <span key={i} className="text-[9px] font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded border border-gray-200">
+                       <span key={i} className={`text-[9px] font-bold px-2.5 py-1 rounded-full ${feature.tagBg}`}>
                          {tag}
                        </span>
                      ))}
                    </div>
-                   <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-blue-600 transition-colors" />
+                   <div className="p-1.5 rounded-full bg-white/40 group-hover:bg-white transition-colors">
+                      <ArrowRight className={`w-4 h-4 ${feature.iconColor}`} />
+                   </div>
                 </div>
               </motion.div>
             );
