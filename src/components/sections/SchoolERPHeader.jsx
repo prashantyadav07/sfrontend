@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { School, Menu, X, Phone, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 
 const SchoolERPHeader = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  const navigate = useNavigate(); // 2. Initialize hook
 
   const centerNavItems = [
     { name: 'Features', id: 'features' },
@@ -38,23 +41,38 @@ const SchoolERPHeader = () => {
 
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
-    const element = document.getElementById(sectionId);
-    
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      setIsMenuOpen(false);
+    // Check if we are on the home page ('/')
+    if (window.location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
     }
+    setIsMenuOpen(false);
   };
 
   const handleLogoClick = () => {
+    navigate('/'); // Logo click par Home page par le jaye
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
+  // 3. New Function for Contact Navigation
+  const handleContactClick = () => {
+    navigate('/contact'); // Yeh seedha /contact page par le jayega
     setIsMenuOpen(false);
   };
 
@@ -78,17 +96,14 @@ const SchoolERPHeader = () => {
         <div className="px-4 md:px-6 relative">
           <div className="flex justify-between items-center">
             
-            {/* 1. LOGO SECTION (Fixed: Text visible on Mobile now) */}
+            {/* LOGO */}
             <div 
               onClick={handleLogoClick}
               className="flex items-center gap-2 cursor-pointer select-none group z-10"
             >
-              {/* Icon */}
               <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-1.5 rounded-lg shadow-md group-hover:scale-105 transition-transform">
                 <School className="w-5 h-5 text-white" />
               </div>
-              
-              {/* Text - Removed 'hidden', added flex-col layout */}
               <div className="flex flex-col">
                 <span className="text-base md:text-lg font-bold text-gray-900 leading-none">
                   NextGen
@@ -99,7 +114,7 @@ const SchoolERPHeader = () => {
               </div>
             </div>
 
-            {/* 2. CENTER NAVIGATION (Hidden on Mobile, Visible on Desktop) */}
+            {/* CENTER NAV */}
             <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 bg-gray-100/50 p-1 rounded-full border border-gray-200/50">
               {centerNavItems.map((item) => (
                 <a 
@@ -113,12 +128,12 @@ const SchoolERPHeader = () => {
               ))}
             </nav>
 
-            {/* 3. RIGHT SIDE */}
+            {/* RIGHT SIDE */}
             <div className="flex items-center gap-3 z-10">
-              {/* Desktop Contact Button */}
+              {/* Desktop Contact Button -> Updated onClick */}
               <button 
-                 onClick={(e) => scrollToSection(e, 'cta')}
-                 className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm bg-gray-900 text-white font-bold rounded-full hover:bg-black hover:scale-105 transition-all shadow-md"
+                 onClick={handleContactClick} 
+                 className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm bg-gray-900 text-white font-bold rounded-full hover:bg-black hover:scale-105 transition-all shadow-md cursor-pointer"
               >
                 <Phone size={14} />
                 <span>Contact Us</span>
@@ -152,9 +167,10 @@ const SchoolERPHeader = () => {
                   {item.name}
                 </a>
               ))}
+              {/* Mobile Contact Button -> Updated onClick */}
               <button 
-                onClick={(e) => scrollToSection(e, 'cta')}
-                className="w-full mt-2 flex items-center justify-center gap-2 p-3 bg-blue-600 text-white font-bold rounded-xl active:scale-95 transition-all"
+                onClick={handleContactClick}
+                className="w-full mt-2 flex items-center justify-center gap-2 p-3 bg-blue-600 text-white font-bold rounded-xl active:scale-95 transition-all cursor-pointer"
               >
                 Contact Us
                 <ChevronRight size={16} />

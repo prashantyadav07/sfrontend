@@ -39,7 +39,7 @@ const ROISection = () => {
 
   return (
     <section className="relative bg-white py-16 md:py-24 lg:py-32 overflow-hidden">
-      {/* Background Decor (Optional Subtle Blur) */}
+      {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none opacity-40">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
         <div className="absolute top-20 right-20 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
@@ -47,7 +47,7 @@ const ROISection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header Section - Typography Optimized for Responsiveness */}
+        {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
           <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs md:text-sm font-bold tracking-wide uppercase mb-4 md:mb-6 border border-blue-100">
             Proven Results
@@ -68,16 +68,17 @@ const ROISection = () => {
           </button>
         </div>
 
-        {/* Stats Grid - Professional Card Layout */}
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div 
                 key={idx} 
-                className="group relative flex flex-col items-center bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full"
+                // CHANGE HERE: rounded-3xl ko rounded-[40px] kar diya hai for "full rounded" look
+                className="group relative flex flex-col items-center bg-white rounded-[40px] border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden"
               >
-                {/* Icon Container - Sleeker and Smaller */}
+                {/* Icon Container */}
                 <div className={`mb-6 p-4 rounded-2xl ${stat.bg} group-hover:scale-110 transition-transform duration-300`}>
                   <Icon className={`w-8 h-8 md:w-10 md:h-10 ${stat.iconColor}`} strokeWidth={1.5} />
                 </div>
@@ -90,12 +91,12 @@ const ROISection = () => {
                 </div>
 
                 {/* Label */}
-                <p className="text-sm md:text-base font-medium text-gray-600 text-center leading-snug">
+                <p className="text-sm md:text-base font-medium text-gray-600 text-center leading-snug mb-4">
                   {stat.label}
                 </p>
 
-                {/* Bottom Active Line (Hover Effect) */}
-                <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-1 w-0 group-hover:w-1/2 bg-gradient-to-r ${stat.color} transition-all duration-500 rounded-t-full opacity-0 group-hover:opacity-100`}></div>
+                {/* Bottom Line */}
+                <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-1.5 w-1/2 bg-gradient-to-r ${stat.color} rounded-t-full`}></div>
               </div>
             );
           })}

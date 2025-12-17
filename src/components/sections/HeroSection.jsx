@@ -5,13 +5,9 @@ import editedImage from '../../assets/edited.jpeg';
 
 const HeroSection = ({ heroRef }) => {
   return (
-    // Updated:
-    // 'pt-12 md:pt-16': Header aur content ke beech ka space drastically kam kar diya.
-    // Pehle ye 'pt-24' tha, ab ye content ko upar shift karega taaki gap na dikhe.
     <section ref={heroRef} className="pt-12 md:pt-16 pb-10 px-6 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto">
         
-        {/* Layout wahi rakha hai: 'items-start' taaki buttons upar rahein */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 lg:items-start items-center">
           
           {/* --- Left Content Section --- */}
@@ -87,21 +83,19 @@ const HeroSection = ({ heroRef }) => {
           </div>
 
           {/* --- Right Image Section --- */}
-          {/* Image size aur styling same hai */}
           <div className="animate-on-scroll flex justify-center lg:justify-end mt-6 lg:mt-0">
             <div className="relative w-full flex justify-center lg:justify-end">
+              {/* Updated Image: No shadow, no border radius (sharp corners) */}
               <img 
                 src={editedImage} 
                 alt="School ERP Dashboard" 
                 className="
                   w-full h-auto 
-                  rounded-2xl border border-gray-100 object-cover
-                  shadow-lg
+                  object-cover
                   max-w-[300px]       
                   sm:max-w-[350px]     
                   md:max-w-[400px]     
-                  lg:max-w-[450px]     
-                  transition-transform duration-300 hover:scale-[1.02]
+                  lg:max-w-[450px]
                 "
               />
             </div>

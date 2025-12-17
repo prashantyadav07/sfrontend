@@ -91,7 +91,7 @@ const CTASection = () => {
               
               {/* Primary Button */}
               <button className="group relative w-full sm:w-auto min-w-[200px] px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-blue-600/30 overflow-hidden transition-all hover:scale-[1.02] hover:shadow-blue-600/40 active:scale-95">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
+                <div className="absolute inset-0 bg-gradient-to-r bg-gray-800 hover:bg-black"></div>
                 {/* Shine animation */}
                 <div className="absolute inset-0 -translate-x-full group-hover:animate-[shine_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"></div>
                 <span className="relative flex items-center justify-center gap-2">
