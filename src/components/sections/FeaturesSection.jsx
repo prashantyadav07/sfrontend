@@ -96,33 +96,33 @@ const features = [
   }
 ];
 
-// --- 1. DESKTOP POSITIONS (BALANCED CLUSTER) ---
-// Brought closer (X range reduced from 380 to 280)
-// Added a center card and a top peak to fill gaps
+// --- 1. DESKTOP POSITIONS (Perfectly Balanced) ---
+// Y Adjusted: Moved UP by 50px compared to last version.
+// Original "Top Peak" overlap issue solved, but not too low anymore.
 const desktopPositions = [
-  { x: -220, y: -160, r: -4 }, // Top Left
-  { x: 220, y: -160, r: 3 },   // Top Right
-  { x: -280, y: 30, r: -2 },   // Mid Left (Outer)
-  { x: 280, y: 30, r: 2 },     // Mid Right (Outer)
-  { x: -110, y: 170, r: -3 },  // Bottom Left (Inner)
-  { x: 110, y: 170, r: 3 },    // Bottom Right (Inner)
-  { x: 0, y: -40, r: 0 },      // DEAD CENTER (Fills the gap)
-  { x: 0, y: -270, r: 0 },     // TOP PEAK (Creates height)
+  { x: -240, y: -110, r: -4 },  // Top Left 
+  { x: 240,  y: -110, r: 3 },   // Top Right
+  { x: -300, y: 80,   r: -2 },  // Mid Left (Outer)
+  { x: 300,  y: 80,   r: 2 },   // Mid Right (Outer)
+  { x: -120, y: 220,  r: -3 },  // Bottom Left (Inner)
+  { x: 120,  y: 220,  r: 3 },   // Bottom Right (Inner)
+  { x: 0,    y: 10,   r: 0 },   // DEAD CENTER
+  { x: 0,    y: -220, r: 0 },   // TOP PEAK (Just below text now)
 ];
 
-// --- 2. TABLET POSITIONS (TIGHTER GRID) ---
+// --- 2. TABLET POSITIONS (Slight Adjustment) ---
 const tabletPositions = [
-  { x: -160, y: -280, r: -3 }, 
-  { x: 160, y: -280, r: 3 },  
-  { x: -200, y: -80, r: 2 },  
-  { x: 200, y: -80, r: -2 },
-  { x: -160, y: 120, r: -3 },
-  { x: 160, y: 120, r: 3 },
-  { x: 0, y: 300, r: 0 },     // Bottom
-  { x: 0, y: -420, r: 0 },    // Top
+  { x: -160, y: -220, r: -3 }, 
+  { x: 160,  y: -220, r: 3 },  
+  { x: -200, y: -20,  r: 2 },  
+  { x: 200,  y: -20,  r: -2 },
+  { x: -160, y: 180,  r: -3 },
+  { x: 160,  y: 180,  r: 3 },
+  { x: 0,    y: 360,  r: 0 },  
+  { x: 0,    y: -360, r: 0 },  
 ];
 
-// --- 3. MOBILE POSITIONS (VERTICAL STACK) ---
+// --- 3. MOBILE POSITIONS (Unchanged) ---
 const mobilePositions = [
   { x: 0, y: -560, r: -2 },
   { x: 0, y: -400, r: 2 },
@@ -165,7 +165,8 @@ const SchoolFeatures = () => {
     return mobilePositions[safeIndex];
   };
 
-  const containerHeight = screenMode === 'mobile' ? 'h-[1400px]' : screenMode === 'tablet' ? 'h-[900px]' : 'h-[650px]';
+  // Adjusted Height back to normal range
+  const containerHeight = screenMode === 'mobile' ? 'h-[1400px]' : screenMode === 'tablet' ? 'h-[900px]' : 'h-[700px]';
 
   return (
     <div className="w-full bg-[#FEFEFE] flex flex-col items-center justify-start relative p-4 py-10 md:py-20 overflow-hidden">
@@ -192,7 +193,7 @@ const SchoolFeatures = () => {
             const pos = getPosition(idx);
 
             const isEven = idx % 2 === 0;
-            const floatX = isEven ? 10 : -10; // Reduced float distance slightly for cleaner look
+            const floatX = isEven ? 10 : -10; 
             const floatY = isEven ? -10 : 10;
 
             return (
@@ -219,7 +220,7 @@ const SchoolFeatures = () => {
                   opacity: { duration: 0.8 },
                   scale: { duration: 0.8 }
                 }}
-                whileHover={{ scale: 1.05, zIndex: 50 }}
+                whileHover={{ scale: 1.05, zIndex: 50, transition: { duration: 0.2 } }}
                 className={`
                   absolute
                   bg-gradient-to-br ${feature.gradient}
@@ -256,7 +257,7 @@ const SchoolFeatures = () => {
                        </span>
                      ))}
                    </div>
-                   <div className="p-1.5 rounded-full bg-white/40 group-hover:bg-white transition-colors">
+                   <div className="p-1.5 rounded-full bg-white/40 group-hover:bg-white transition-colors cursor-pointer">
                       <ArrowRight className={`w-4 h-4 ${feature.iconColor}`} />
                    </div>
                 </div>
