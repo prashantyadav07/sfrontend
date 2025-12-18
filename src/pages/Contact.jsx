@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, MessageSquare, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageSquare, CheckCircle2, ArrowRight } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
+    subject: 'Support',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Topics for the professional chip selection
+  const topics = ["Support", "Sales", "Partnership", "Other"];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,163 +22,123 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ firstName: '', lastName: '', email: '', message: '' });
+      setFormData({ firstName: '', lastName: '', email: '', subject: 'Support', message: '' });
     }, 3000);
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4 md:p-6 font-sans text-slate-900">
+    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4 font-sans text-slate-900 relative overflow-hidden">
       
-      {/* Background Decoration - Professional & Subtle */}
+      {/* --- Subtle Background (Original Theme) --- */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-40" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-slate-200 rounded-full blur-3xl opacity-40" />
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-blue-100 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-slate-200 rounded-full blur-3xl opacity-50" />
       </div>
 
-      {/* Main Card: Balanced Width (max-w-5xl) for Professional Look */}
-      <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.07)] border border-slate-100 overflow-hidden flex flex-col md:flex-row">
+      {/* --- Main Card (Medium Size: max-w-4xl) --- */}
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden flex flex-col md:flex-row">
         
-        {/* --- LEFT SIDE: Contact Info (Sidebar Style) --- */}
-        <div className="w-full md:w-5/12 bg-slate-50 p-8 md:p-10 flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-slate-100">
-          
-          {/* Top Section */}
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <span className="text-xs font-bold text-slate-600 uppercase tracking-wide">Contact Sales</span>
+        {/* --- LEFT SIDE: Info (Slate-50 Background) --- */}
+        <div className="w-full md:w-5/12 bg-slate-50 p-6 md:p-8 flex flex-col justify-between relative border-r border-slate-100">
+          <div>
+            <div className="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-blue-600 uppercase bg-blue-50 rounded-full border border-blue-100">
+              Contact Us
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-              Let's build something <br />
-              <span className="text-blue-600">great together.</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
+              Let's talk.
             </h2>
-            
             <p className="text-slate-500 text-sm leading-relaxed mb-8">
-              We help educational institutions streamline their testing process. Schedule a call or drop us a message.
+              Ask us anything or just say hi. We are here to help you grow.
             </p>
 
-            <div className="space-y-4">
-              <ContactRow icon={Mail} text="support@notes2test.ai" />
-              <ContactRow icon={Phone} text="+1 (555) 000-1234" />
-              <ContactRow icon={MapPin} text="San Francisco, CA" />
+            <div className="space-y-5">
+              <ContactItem icon={Mail} title="Email" content="hello@schoolerp.com" />
+              <ContactItem icon={Phone} title="Phone" content="+1 (555) 000-0000" />
+              <ContactItem icon={MapPin} title="Office" content="123 Education Lane, City" />
             </div>
           </div>
 
-          {/* Bottom Section: Social/Trust */}
-          <div className="relative z-10 mt-8 md:mt-0 pt-8 border-t border-slate-200/60">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Trusted Partners</p>
-            <div className="flex gap-4 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-              {/* Simple geometric placeholders for logos */}
-              <div className="h-6 w-20 bg-slate-300 rounded" />
-              <div className="h-6 w-20 bg-slate-300 rounded" />
-              <div className="h-6 w-16 bg-slate-300 rounded" />
-            </div>
-          </div>
-
-          {/* Decorative Pattern */}
-          <div className="absolute right-0 bottom-0 opacity-[0.03] pointer-events-none">
-             <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 200L200 0H0V200Z" fill="currentColor"/>
-             </svg>
+          {/* Social / Bottom decorative */}
+          <div className="mt-8 pt-6 border-t border-slate-200/60 hidden md:block">
+            <p className="text-xs text-slate-400">© 2024 School ERP Inc.</p>
           </div>
         </div>
 
-        {/* --- RIGHT SIDE: The Form --- */}
-        <div className="w-full md:w-7/12 p-8 md:p-12 bg-white relative">
+        {/* --- RIGHT SIDE: Compact Form --- */}
+        <div className="w-full md:w-7/12 p-6 md:p-8 bg-white relative">
           
-          {/* Success State */}
           {isSubmitted ? (
-            <div className="absolute inset-0 z-20 bg-white flex flex-col items-center justify-center animate-in fade-in duration-300">
-              <div className="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center mb-4">
-                <CheckCircle2 className="w-8 h-8" />
+            <div className="absolute inset-0 z-10 bg-white flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
+              <div className="w-14 h-14 bg-green-50 text-green-600 rounded-full flex items-center justify-center mb-3">
+                <CheckCircle2 className="w-7 h-7" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Message Sent</h3>
-              <p className="text-slate-500 text-center max-w-xs">
-                Thanks for reaching out. Our team will get back to you within 24 hours.
-              </p>
-              <button 
-                onClick={() => setIsSubmitted(false)}
-                className="mt-6 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
-              >
-                Send another message
+              <h3 className="text-xl font-bold text-slate-900">Message Sent!</h3>
+              <p className="text-sm text-slate-500 mt-1">We'll get back to you soon.</p>
+              <button onClick={() => setIsSubmitted(false)} className="mt-5 text-sm font-medium text-blue-600 hover:underline">
+                Send another
               </button>
             </div>
           ) : (
-            <>
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Send a Message</h3>
-                  <p className="text-sm text-slate-500 mt-1">We typically reply in under 5 mins.</p>
-                </div>
-                <div className="hidden sm:flex w-10 h-10 bg-blue-50 text-blue-600 rounded-full items-center justify-center">
-                  <MessageSquare className="w-5 h-5" />
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <InputGroup label="First Name" name="firstName" placeholder="John" value={formData.firstName} onChange={handleChange} />
+                <InputGroup label="Last Name" name="lastName" placeholder="Doe" value={formData.lastName} onChange={handleChange} />
+              </div>
+
+              <InputGroup label="Email" name="email" type="email" placeholder="john@example.com" value={formData.email} onChange={handleChange} />
+
+              {/* Topic Selection Chips */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Topic</label>
+                <div className="flex flex-wrap gap-2">
+                  {topics.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, subject: t })}
+                      className={`text-xs px-3 py-1.5 rounded-md border transition-all ${
+                        formData.subject === t
+                          ? 'bg-slate-800 text-white border-slate-800'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              <form className="space-y-5" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <InputField 
-                    label="First Name" 
-                    name="firstName" 
-                    value={formData.firstName} 
-                    onChange={handleChange} 
-                    placeholder="John" 
-                  />
-                  <InputField 
-                    label="Last Name" 
-                    name="lastName" 
-                    value={formData.lastName} 
-                    onChange={handleChange} 
-                    placeholder="Doe" 
-                  />
-                </div>
-
-                <InputField 
-                  label="Work Email" 
-                  name="email" 
-                  type="email"
-                  value={formData.email} 
-                  onChange={handleChange} 
-                  placeholder="john@company.com" 
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Message</label>
+                <textarea
+                  rows="3"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="How can we help?"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
                 />
+              </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Message</label>
-                  <textarea
-                    rows="4"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="How can we help you?"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 resize-none"
-                  />
-                </div>
-
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-3.5 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-sm disabled:opacity-70 disabled:cursor-not-allowed mt-2"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>
-                      Processing...
-                    </span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </form>
-            </>
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-sm mt-2"
+              >
+                {isSubmitting ? 'Sending...' : (
+                  <>
+                    Send Message <Send className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </form>
           )}
         </div>
       </div>
@@ -182,24 +146,30 @@ const Contact = () => {
   );
 };
 
-// Reusable Components for consistency
+// --- Small Reusable Components ---
 
-const ContactRow = ({ icon: Icon, text }) => (
-  <div className="flex items-center gap-3 group cursor-pointer">
-    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-blue-600 group-hover:border-blue-200 transition-colors">
+const ContactItem = ({ icon: Icon, title, content }) => (
+  <div className="flex items-center gap-3 group">
+    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-blue-600 group-hover:border-blue-100 transition-colors shadow-sm">
       <Icon className="w-4 h-4" />
     </div>
-    <span className="text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors">{text}</span>
+    <div>
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{title}</p>
+      <p className="text-sm font-medium text-slate-700">{content}</p>
+    </div>
   </div>
 );
 
-const InputField = ({ label, type = "text", ...props }) => (
+const InputGroup = ({ label, name, type = "text", placeholder, value, onChange }) => (
   <div className="space-y-1.5">
     <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">{label}</label>
     <input
       type={type}
-      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 transition-all duration-200"
-      {...props}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
     />
   </div>
 );
