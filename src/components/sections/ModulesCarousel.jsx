@@ -6,7 +6,7 @@ import {
   Building2, Box, Receipt, MessageSquareWarning, Bell, X, CheckCircle2 
 } from 'lucide-react';
 
-// --- 1. DATA (Student Image Fixed) ---
+// --- 1. DATA (All Real Images) ---
 const modules = [
   { 
     id: 1,
@@ -14,7 +14,7 @@ const modules = [
     desc: "360° Campus Analytics", 
     icon: LayoutDashboard, 
     color: "bg-blue-600",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Central Command Center",
       description: "Get a bird's-eye view of your entire institution's health. Monitor attendance, fee collection, and academic performance in real-time.",
@@ -27,7 +27,6 @@ const modules = [
     desc: "Admission to Alumni", 
     icon: GraduationCap, 
     color: "bg-emerald-600",
-    // Fixed Image: High quality student graduation image
     image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Student Information System",
@@ -41,7 +40,7 @@ const modules = [
     desc: "Staff & Payroll", 
     icon: Users, 
     color: "bg-orange-500",
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Teacher & Staff Management",
       description: "Empower your faculty with digital tools while simplifying HR processes like payroll and leave management.",
@@ -54,7 +53,7 @@ const modules = [
     desc: "Automated Billing", 
     icon: CreditCard, 
     color: "bg-purple-600",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Fee & Finance Engine",
       description: "Eliminate queues and manual errors. Automate invoice generation and accept payments online securely.",
@@ -67,7 +66,7 @@ const modules = [
     desc: "Timetable & Subjects", 
     icon: School, 
     color: "bg-indigo-600",
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Academic Scheduling",
       description: "Create conflict-free timetables for hundreds of classes and teachers in minutes.",
@@ -119,7 +118,7 @@ const modules = [
     desc: "Asset Management", 
     icon: Box, 
     color: "bg-lime-600",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Store & Inventory",
       description: "Keep track of every piece of equipment, stationery, and furniture in your institution.",
@@ -132,7 +131,7 @@ const modules = [
     desc: "SMS & Notifications", 
     icon: Bell, 
     color: "bg-violet-600",
-    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Alert System",
       description: "Bridge the gap between parents and the school with instant notifications.",
@@ -208,9 +207,6 @@ const ScrollerCard = ({ item, onClick }) => {
   return (
     <div 
       onClick={() => onClick(item)}
-      // SIZE CHANGES:
-      // Mobile: w-[280px] h-[100px]
-      // Tablet/Desktop: w-[400px] h-[140px] (Bigger, Bolder)
       className="relative group flex-shrink-0 mx-3 md:mx-5
                  w-[280px] h-[100px] 
                  md:w-[400px] md:h-[140px]
@@ -232,26 +228,18 @@ const ScrollerCard = ({ item, onClick }) => {
         <div className="flex-1 p-3 md:p-5 flex flex-col justify-center relative bg-white">
           <div className="flex items-center gap-2 mb-1.5 md:mb-2">
             <div className={`p-1.5 md:p-2 rounded-lg ${item.color} text-white`}>
-              {/* Icon scales with screen */}
               <Icon className="w-4 h-4 md:w-5 md:h-5" />
             </div>
-            {/* Title Font Size */}
-            <h4 className="font-bold text-gray-900 leading-tight
-                           text-sm md:text-xl">
+            <h4 className="font-bold text-gray-900 leading-tight text-base md:text-xl">
               {item.name}
             </h4>
           </div>
           
-          {/* Desc Font Size */}
-          <p className="text-gray-500 font-medium pl-1 line-clamp-2
-                        text-[11px] md:text-sm">
+          <p className="text-gray-500 font-medium pl-1 line-clamp-2 text-xs md:text-sm">
             {item.desc}
           </p>
           
-          {/* 'Read More' hint */}
-          <span className="absolute bottom-2 right-3 md:bottom-3 md:right-4 
-                           text-[10px] md:text-xs text-blue-600 font-bold 
-                           opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+          <span className="absolute bottom-2 right-3 md:bottom-3 md:right-4 text-xs md:text-xs text-blue-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
             Click to view →
           </span>
         </div>
@@ -277,7 +265,7 @@ const InfiniteModuleScroller = () => {
       
       {/* --- HEADER --- */}
       <div className="max-w-4xl mx-auto text-center px-4 mb-12 md:mb-20 animate-fade-in">
-        <div className="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-blue-100 text-blue-700 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 border border-blue-200">
+        <div className="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs md:text-xs font-bold uppercase tracking-widest mb-4 border border-blue-200">
           Integrated Ecosystem
         </div>
         <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 md:mb-6 tracking-tight">

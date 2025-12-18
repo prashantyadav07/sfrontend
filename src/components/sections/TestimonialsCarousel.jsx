@@ -17,7 +17,7 @@ const testimonials = [
     org: "Delhi Public School",
     content: "NextGen ERP has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=200&h=200",
     color: "blue"
   },
   {
@@ -26,7 +26,7 @@ const testimonials = [
     org: "Springdale Intl.",
     content: "Outstanding platform! Our administrative efficiency has increased by 60%. The support team is incredibly responsive and helpful.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200&h=200",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200&h=200",
     color: "indigo"
   },
   {
@@ -35,7 +35,7 @@ const testimonials = [
     org: "Modern School",
     content: "The reporting and analytics features are exceptional. We can now make data-driven decisions that benefit our students and faculty.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200&h=200",
     color: "violet"
   },
   {
@@ -44,16 +44,16 @@ const testimonials = [
     org: "Cambridge Academy",
     content: "Implementation was seamless and the ROI has been remarkable. This system has become indispensable to our daily operations.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&h=200",
+    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=200&h=200",
     color: "blue"
   },
   {
-    name: "Sarah Jenkins",
+    name: "Harshdeep Sharma",
     role: "IT Coordinator",
-    org: "St. Xavier's High",
+    org: "RP Public School",
     content: "The security features and data privacy compliance gave us peace of mind. Best ed-tech investment we've made in a decade.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1598550874175-4d7112ee7f1c?auto=format&fit=crop&q=80&w=200&h=200",
+    image: "https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=crop&q=80&w=200&h=200",
     color: "indigo"
   }
 ];
@@ -269,7 +269,6 @@ const ProfessionalTestimonials = () => {
               <p className="text-gray-500 text-lg">Join the fastest growing education network today.</p>
             </div>
             
-            {/* CHANGED: Replaced <button> with <a> tag pointing to /contact */}
             <a 
               href="/contact" 
               className="group relative px-8 py-4 bg-gray-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-black transition-all duration-300 flex items-center gap-2"
