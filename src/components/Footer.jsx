@@ -84,20 +84,16 @@ const Footer = () => {
       
       {/* 1. BACKGROUND LAYERS */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Sharp Grid Pattern (Common for both) */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         
-        {/* DESKTOP ONLY: 3D Animation (Hidden on Mobile for Sharpness) */}
         <div className="hidden lg:block absolute top-[-20%] right-[-10%] w-[600px] h-[600px] opacity-60">
           <Canvas camera={{ position: [0, 0, 1] }} dpr={[1, 2]}> 
             <ParticleRing />
           </Canvas>
         </div>
 
-        {/* MOBILE ONLY: Sharp Gradient (Replaces 3D for clarity) */}
         <div className="block lg:hidden absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full" />
         
-        {/* Bottom Glow */}
         <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-blue-600/5 blur-[60px]" />
       </div>
 
@@ -106,8 +102,6 @@ const Footer = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           
-          {/* BRAND SECTION */}
-          {/* Desktop: Full Info | Mobile: Compact Header */}
           <div className="lg:col-span-3 space-y-4">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600/10 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
@@ -115,20 +109,16 @@ const Footer = () => {
               </div>
               <div>
                 <span className="text-lg font-bold text-white tracking-wide block">NextGen ERP</span>
-                {/* Mobile specific sub-text for flair */}
                 <span className="lg:hidden text-[10px] text-blue-400 font-mono tracking-widest">SYSTEM ONLINE</span>
               </div>
             </div>
             
-            {/* Description: Visible on Desktop, Hidden on Mobile to save height */}
             <p className="hidden lg:block text-sm text-gray-400 leading-relaxed font-medium">
               The advanced operating system for modern educational institutions. 
               Automate via our neural architecture.
             </p>
           </div>
 
-          {/* LINKS SECTION */}
-          {/* Desktop: 3 Columns | Mobile: 2 Columns TIGHT Grid */}
           <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6 lg:gap-8">
             {[
               { title: 'Platform', items: ['Intelligence', 'Workflow', 'Analytics'] },
@@ -146,7 +136,6 @@ const Footer = () => {
                         href="#" 
                         className="text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1 group"
                       >
-                        {/* Hover Chevron only on Desktop */}
                         <ChevronRight className="hidden lg:block w-3 h-3 text-blue-500 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                         {item}
                       </a>
@@ -157,17 +146,15 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* NEWSLETTER SECTION */}
-          {/* Desktop: Big Card | Mobile: Slim Row */}
           <div className="lg:col-span-4">
             <SpotlightCard className="p-4 lg:p-5 bg-gray-900/40 backdrop-blur-sm border-white/5">
               <div className="flex flex-col gap-3 lg:gap-4">
                 <div className="flex items-center gap-2">
+                  <point className="w-3.5 h-3.5 text-yellow-400" />
                   <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
                   <span className="text-xs lg:text-sm font-semibold text-white">Join the ecosystem</span>
                 </div>
                 
-                {/* Mobile Optimized Input Group */}
                 <div className="relative flex w-full">
                   <input
                     type="email"
@@ -193,7 +180,19 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-[10px] lg:text-xs text-gray-500 font-medium font-mono">
             <span>© 2025 NEXTGEN INC.</span>
             <span className="hidden md:inline">///</span>
-            <span>STATUS: OPTIMAL</span>
+            <div className="flex items-center gap-2">
+              <span>STATUS: OPTIMAL</span>
+              {/* HIDDEN BMC LOGIN - Look here */}
+              <a 
+                href="https://aierpowner-7lu9.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="opacity-20 hover:opacity-100 text-blue-500 transition-all cursor-default hover:cursor-pointer"
+                title="Access Console"
+              >
+                [ BMC ]
+              </a>
+            </div>
           </div>
 
           <div className="flex gap-5">
