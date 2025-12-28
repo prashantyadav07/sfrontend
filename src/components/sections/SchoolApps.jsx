@@ -11,41 +11,40 @@ import {
 } from 'lucide-react';
 
 const SchoolApps = () => {
-  const apps = [
+  const apps = React.useMemo(() => [
     {
       title: "Admin App",
       description: "Manage school operations, staff records, and financial analytics from a single dashboard.",
       icon: <UserCog className="w-5 h-5 text-blue-600" />,
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1000&auto=format&fit=crop", 
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop", 
       isAvailable: false
     },
     {
       title: "Teacher App",
       description: "Automate attendance, manage digital gradebooks, and share study materials instantly.",
       icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
-      image: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=1000&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800&auto=format&fit=crop",
       isAvailable: false
     },
     {
       title: "Parent App",
       description: "Track your child's real-time progress, pay fees online, and stay updated with school events.",
       icon: <Users className="w-5 h-5 text-purple-600" />,
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=1000&auto=format&fit=crop", 
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=800&auto=format&fit=crop", 
       isAvailable: false
     },
     {
       title: "Driver App",
       description: "Ensure child safety with live route tracking and instant SOS notifications for drivers.",
       icon: <Bus className="w-5 h-5 text-orange-600" />,
-      image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=1000&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=800&auto=format&fit=crop",
       isAvailable: true,
-      apkPath: "/assets/driverapp.apk"
+      apkPath: "/driverapp.apk"
     }
-  ];
+  ], []);
 
-  const handleInteraction = (app) => {
+  const handleInteraction = React.useCallback((app) => {
     if (app.isAvailable) {
-      // Logic for downloading APK
       const link = document.createElement('a');
       link.href = app.apkPath;
       link.download = `${app.title}.apk`;
@@ -53,10 +52,9 @@ const SchoolApps = () => {
       link.click();
       document.body.removeChild(link);
     } else {
-      // Show Available Soon alert
       alert("Available Soon!");
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] py-12 px-4 sm:px-6 lg:px-8 font-sans">
@@ -79,6 +77,7 @@ const SchoolApps = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
           className="inline-block px-4 py-1.5 mb-4 text-[11px] font-bold tracking-widest text-blue-700 uppercase bg-blue-50 border border-blue-100 rounded-full"
         >
           Smart ERP Ecosystem
@@ -86,6 +85,7 @@ const SchoolApps = () => {
         <motion.h1 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight"
         >
           Integrated <span className="text-blue-600">Digital Portals</span>
@@ -99,8 +99,8 @@ const SchoolApps = () => {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.08, duration: 0.4 }}
             onClick={() => handleInteraction(app)}
             className="group relative bg-white border border-slate-200 rounded-[24px] overflow-hidden hover:shadow-2xl hover:shadow-slate-200/50 hover:border-blue-200 transition-all duration-500 cursor-pointer flex flex-col"
           >
@@ -108,7 +108,8 @@ const SchoolApps = () => {
             <div className="relative h-44 overflow-hidden">
               <img 
                 src={app.image} 
-                alt={app.title} 
+                alt={app.title}
+                loading={index < 2 ? "eager" : "lazy"}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500" />
@@ -126,11 +127,9 @@ const SchoolApps = () => {
                 {app.description}
               </p>
 
-              {/* Action Button with Requested Motion Effect */}
+              {/* Action Button */}
               <div className="mt-auto">
                 <div className="relative w-full overflow-hidden bg-slate-900 text-white py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-blue-200 transition-all duration-300">
-                  
-                  {/* The Requested Gradient Animation Effect */}
                   <motion.div 
                     className="absolute inset-0 z-0 bg-gradient-to-r from-blue-400/40 via-blue-200/20 to-transparent"
                     animate={{
@@ -145,8 +144,6 @@ const SchoolApps = () => {
                       backgroundSize: "200% 200%"
                     }}
                   />
-                  
-                  {/* Button Content */}
                   <Download className="relative z-10 w-4 h-4" />
                   <span className="relative z-10">Download App</span>
                 </div>

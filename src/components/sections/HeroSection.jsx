@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { LogIn, Trophy, Smartphone } from 'lucide-react'; // Smartphone icon add kiya hai
 import { AuroraText } from '@/components/ui/aurora-text';
 import editedImage from '../../assets/edited.jpeg';
@@ -71,15 +72,15 @@ const HeroSection = ({ heroRef }) => {
 
             {/* --- Clickable "Download the Apps" Link --- */}
             <div className="flex items-center">
-              <a 
-                href="/school-apps" 
+              <Link 
+                to="/school-apps" 
                 className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors group"
               >
                 <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
                   <Smartphone className="w-4 h-4" />
                 </div>
                 Download the Apps
-              </a>
+              </Link>
             </div>
           </div>
 
