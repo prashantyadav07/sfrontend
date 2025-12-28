@@ -14,7 +14,7 @@ function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// --- 3D Background (Only for Desktop) ---
+// --- 3D Background ---
 const ParticleRing = (props) => {
   const ref = useRef();
   const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }));
@@ -93,7 +93,6 @@ const Footer = () => {
         </div>
 
         <div className="block lg:hidden absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full" />
-        
         <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-blue-600/5 blur-[60px]" />
       </div>
 
@@ -104,18 +103,29 @@ const Footer = () => {
           
           <div className="lg:col-span-3 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600/10 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                <School className="h-4 w-4 text-blue-400" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-600/10 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                <School className="h-5 w-5 text-blue-400" />
               </div>
-              <div>
-                <span className="text-lg font-bold text-white tracking-wide block">NextGen ERP</span>
-                <span className="lg:hidden text-[10px] text-blue-400 font-mono tracking-widest">SYSTEM ONLINE</span>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-white tracking-tight">NextGen ERP</span>
+                  {/* BMC LINK INTEGRATED NEXT TO NAME */}
+                  <a 
+                    href="https://aierpowner-7lu9.vercel.app/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-mono text-blue-500/30 hover:text-blue-400 transition-all border border-blue-500/10 px-1.5 py-0.5 rounded bg-blue-500/5"
+                    title="Admin Console"
+                  >
+                    [ BMC ]
+                  </a>
+                </div>
+                <span className="text-[10px] text-blue-400/60 font-mono tracking-[0.2em] uppercase">System Online</span>
               </div>
             </div>
             
             <p className="hidden lg:block text-sm text-gray-400 leading-relaxed font-medium">
               The advanced operating system for modern educational institutions. 
-              Automate via our neural architecture.
             </p>
           </div>
 
@@ -132,10 +142,7 @@ const Footer = () => {
                 <ul className="space-y-2 lg:space-y-3">
                   {section.items.map((item) => (
                     <li key={item}>
-                      <a 
-                        href="#" 
-                        className="text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1 group"
-                      >
+                      <a href="#" className="text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1 group">
                         <ChevronRight className="hidden lg:block w-3 h-3 text-blue-500 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                         {item}
                       </a>
@@ -150,7 +157,6 @@ const Footer = () => {
             <SpotlightCard className="p-4 lg:p-5 bg-gray-900/40 backdrop-blur-sm border-white/5">
               <div className="flex flex-col gap-3 lg:gap-4">
                 <div className="flex items-center gap-2">
-                  <point className="w-3.5 h-3.5 text-yellow-400" />
                   <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
                   <span className="text-xs lg:text-sm font-semibold text-white">Join the ecosystem</span>
                 </div>
@@ -159,16 +165,12 @@ const Footer = () => {
                   <input
                     type="email"
                     placeholder="Enter email..."
-                    className="w-full bg-black/50 border border-gray-700 text-xs lg:text-sm text-white placeholder-gray-500 rounded-l-lg py-2.5 pl-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+                    className="w-full bg-black/50 border border-gray-700 text-xs lg:text-sm text-white placeholder-gray-500 rounded-l-lg py-2.5 pl-3 focus:outline-none focus:border-blue-500 font-medium"
                   />
-                  <button className="bg-blue-600 hover:bg-blue-500 text-white rounded-r-lg px-4 transition-colors flex items-center justify-center border-t border-b border-r border-blue-500">
+                  <button className="bg-blue-600 hover:bg-blue-500 text-white rounded-r-lg px-4 flex items-center justify-center border-t border-b border-r border-blue-500">
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
-                
-                <p className="hidden lg:block text-xs text-gray-500">
-                  Secure transmission. No spam protocols active.
-                </p>
               </div>
             </SpotlightCard>
           </div>
@@ -180,19 +182,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-[10px] lg:text-xs text-gray-500 font-medium font-mono">
             <span>© 2025 NEXTGEN INC.</span>
             <span className="hidden md:inline">///</span>
-            <div className="flex items-center gap-2">
-              <span>STATUS: OPTIMAL</span>
-              {/* HIDDEN BMC LOGIN - Look here */}
-              <a 
-                href="https://aierpowner-7lu9.vercel.app/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="opacity-20 hover:opacity-100 text-blue-500 transition-all cursor-default hover:cursor-pointer"
-                title="Access Console"
-              >
-                [ BMC ]
-              </a>
-            </div>
+            <span>STATUS: OPTIMAL</span>
           </div>
 
           <div className="flex gap-5">

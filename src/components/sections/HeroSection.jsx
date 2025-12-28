@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, LogIn, Trophy } from 'lucide-react';
+import { LogIn, Trophy, Smartphone } from 'lucide-react'; // Smartphone icon add kiya hai
 import { AuroraText } from '@/components/ui/aurora-text';
 import editedImage from '../../assets/edited.jpeg';
 
@@ -69,23 +69,23 @@ const HeroSection = ({ heroRef }) => {
               </a>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex items-center gap-5 text-sm text-gray-600 font-medium">
-              <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                Free 30-day trial
-              </div>
-              <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                No credit card required
-              </div>
+            {/* --- Clickable "Download the Apps" Link --- */}
+            <div className="flex items-center">
+              <a 
+                href="/school-apps" 
+                className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors group"
+              >
+                <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+                  <Smartphone className="w-4 h-4" />
+                </div>
+                Download the Apps
+              </a>
             </div>
           </div>
 
           {/* --- Right Image Section --- */}
           <div className="animate-on-scroll flex justify-center lg:justify-end mt-6 lg:mt-0">
             <div className="relative w-full flex justify-center lg:justify-end">
-              {/* Updated Image: No shadow, no border radius (sharp corners) */}
               <img 
                 src={editedImage} 
                 alt="School ERP Dashboard" 

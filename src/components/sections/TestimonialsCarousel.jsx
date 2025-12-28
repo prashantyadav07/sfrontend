@@ -3,6 +3,7 @@ import { motion, useAnimation, useInView } from 'framer-motion';
 import { Quote, Star, Users, TrendingUp, Award, Clock, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Link } from 'react-router-dom'; // Navigation ke liye
 
 // --- Utility for Cleaner Classes ---
 function cn(...inputs) {
@@ -71,13 +72,9 @@ const TestimonialCard = ({ item }) => {
   return (
     <div className="w-[350px] md:w-[400px] flex-shrink-0 mx-4 h-full">
       <div className="relative group h-full">
-        {/* Card Background & Border Effect */}
         <div className="absolute -inset-0.5 bg-gray-200 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 blur-sm"></div>
         
-        {/* Main Card Content */}
         <div className="relative h-full bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-          
-          {/* Header */}
           <div>
             <div className="flex justify-between items-start mb-6">
               <div className="flex items-center gap-4">
@@ -98,13 +95,11 @@ const TestimonialCard = ({ item }) => {
               <Quote className="w-8 h-8 text-gray-100 group-hover:text-gray-200 transition-colors duration-300 fill-current" />
             </div>
 
-            {/* Content */}
             <p className="text-gray-600 leading-relaxed text-[15px] mb-6 font-medium">
               "{item.content}"
             </p>
           </div>
 
-          {/* Footer / Rating */}
           <div className="flex items-center gap-1 border-t border-gray-50 pt-4 mt-auto">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
@@ -117,11 +112,9 @@ const TestimonialCard = ({ item }) => {
   );
 };
 
-// --- Infinite Moving Cards Component ---
 const Marquee = ({ items, direction = "left", speed = 40 }) => {
   return (
     <div className="relative flex overflow-hidden group">
-      {/* Gradient Masks */}
       <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent pointer-events-none"></div>
       <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent pointer-events-none"></div>
       
@@ -138,7 +131,6 @@ const Marquee = ({ items, direction = "left", speed = 40 }) => {
             ease: "linear",
           },
         }}
-        // Pause on hover
         whileHover={{ animationPlayState: "paused" }} 
       >
         {[...items, ...items].map((item, idx) => (
@@ -149,7 +141,6 @@ const Marquee = ({ items, direction = "left", speed = 40 }) => {
   );
 };
 
-// --- Animated Stats Number ---
 const AnimatedNumber = ({ value }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -166,20 +157,16 @@ const AnimatedNumber = ({ value }) => {
   );
 };
 
-// --- Main Section ---
 const ProfessionalTestimonials = () => {
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 py-24 md:py-32">
       
-      {/* --- Decorative Background Elements --- */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:32px_32px] opacity-20"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* --- Header --- */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -218,12 +205,10 @@ const ProfessionalTestimonials = () => {
           </motion.p>
         </div>
 
-        {/* --- Marquee Section --- */}
         <div className="relative -mx-4 md:-mx-0 mb-20">
            <Marquee items={testimonials} speed={50} />
         </div>
 
-        {/* --- Stats Grid --- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
@@ -251,7 +236,7 @@ const ProfessionalTestimonials = () => {
           })}
         </div>
 
-        {/* --- CTA Box --- */}
+        {/* --- Updated CTA Box with Animated Airy Orange Gradient --- */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -259,7 +244,6 @@ const ProfessionalTestimonials = () => {
           transition={{ delay: 0.4 }}
           className="mt-24 relative overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-xl"
         >
-          {/* Subtle decoration */}
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-gray-50 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-gray-50 rounded-full blur-3xl"></div>
           
@@ -269,13 +253,30 @@ const ProfessionalTestimonials = () => {
               <p className="text-gray-500 text-lg">Join the fastest growing education network today.</p>
             </div>
             
-            <a 
-              href="/contact" 
-              className="group relative px-8 py-4 bg-gray-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-black transition-all duration-300 flex items-center gap-2"
+            {/* Contact Us Button with Airy Orange Animated Gradient */}
+            <Link 
+              to="/contact" 
+              className="group relative px-8 py-4 text-gray-900 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 flex items-center gap-2 overflow-hidden border border-orange-200"
             >
-              Book a Demo
-              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
+              {/* Background Animated Gradient Layer */}
+              <motion.div 
+                className="absolute inset-0 z-0 bg-gradient-to-r from-orange-400/40 via-orange-200/20 to-transparent"
+                animate={{
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  backgroundSize: "200% 200%"
+                }}
+              />
+              
+              <span className="relative z-10">Contact Us</span>
+              <ArrowUpRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </Link>
           </div>
         </motion.div>
 
