@@ -251,6 +251,11 @@ const ScrollerCard = ({ item, onClick }) => {
 // --- 4. MAIN SCROLLER SECTION ---
 const InfiniteModuleScroller = () => {
   const [selectedModule, setSelectedModule] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollRef1 = React.useRef(null);
+  const scrollRef2 = React.useRef(null);
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -259,6 +264,24 @@ const InfiniteModuleScroller = () => {
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
+
+  const handleMouseDown = (e, ref) => {
+    setIsDragging(true);
+    setStartX(e.pageX - ref.current.offsetLeft);
+    setScrollLeft(ref.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e, ref) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - ref.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    ref.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   return (
     <section className="py-20 md:py-32 bg-gray-50 relative overflow-hidden">
@@ -284,7 +307,14 @@ const InfiniteModuleScroller = () => {
         <div className="absolute inset-y-0 right-0 w-16 md:w-40 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
 
         {/* ROW 1: Moves Left */}
-        <div className="flex overflow-hidden group">
+        <div 
+          ref={scrollRef1}
+          className="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing group"
+          onMouseDown={(e) => handleMouseDown(e, scrollRef1)}
+          onMouseMove={(e) => handleMouseMove(e, scrollRef1)}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           <div className="flex animate-scroll-left group-hover:pause-animation py-2">
             {[...firstRow, ...firstRow, ...firstRow, ...firstRow].map((item, idx) => (
               <ScrollerCard key={`r1-${idx}`} item={item} onClick={setSelectedModule} />
@@ -293,7 +323,14 @@ const InfiniteModuleScroller = () => {
         </div>
 
         {/* ROW 2: Moves Right */}
-        <div className="flex overflow-hidden group">
+        <div 
+          ref={scrollRef2}
+          className="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing group"
+          onMouseDown={(e) => handleMouseDown(e, scrollRef2)}
+          onMouseMove={(e) => handleMouseMove(e, scrollRef2)}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           <div className="flex animate-scroll-right group-hover:pause-animation py-2">
              {[...secondRow, ...secondRow, ...secondRow, ...secondRow].map((item, idx) => (
               <ScrollerCard key={`r2-${idx}`} item={item} onClick={setSelectedModule} />
@@ -343,6 +380,13 @@ const InfiniteModuleScroller = () => {
         }
         .group-hover\\:pause-animation:hover {
           animation-play-state: paused;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </section>

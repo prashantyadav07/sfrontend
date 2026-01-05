@@ -31,7 +31,8 @@ const SchoolApps = () => {
       description: "Track your child's real-time progress, pay fees online, and stay updated with school events.",
       icon: <Users className="w-5 h-5 text-purple-600" />,
       image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=800&auto=format&fit=crop", 
-      isAvailable: false
+      isAvailable: true, // Updated to true
+      apkPath: "/app-debug.apk" // Pointing to public folder
     },
     {
       title: "Driver App",
@@ -44,10 +45,10 @@ const SchoolApps = () => {
   ], []);
 
   const handleInteraction = React.useCallback((app) => {
-    if (app.isAvailable) {
+    if (app.isAvailable && app.apkPath) {
       const link = document.createElement('a');
       link.href = app.apkPath;
-      link.download = `${app.title}.apk`;
+      link.download = `${app.title.replace(/\s+/g, '_')}.apk`; // Automatically sets filename
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -129,23 +130,27 @@ const SchoolApps = () => {
 
               {/* Action Button */}
               <div className="mt-auto">
-                <div className="relative w-full overflow-hidden bg-slate-900 text-white py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-blue-200 transition-all duration-300">
-                  <motion.div 
-                    className="absolute inset-0 z-0 bg-gradient-to-r from-blue-400/40 via-blue-200/20 to-transparent"
-                    animate={{
-                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    style={{
-                      backgroundSize: "200% 200%"
-                    }}
-                  />
+                <div className={`relative w-full overflow-hidden ${app.isAvailable ? 'bg-slate-900' : 'bg-slate-400'} text-white py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-blue-200 transition-all duration-300`}>
+                  {app.isAvailable && (
+                    <motion.div 
+                      className="absolute inset-0 z-0 bg-gradient-to-r from-blue-400/40 via-blue-200/20 to-transparent"
+                      animate={{
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      style={{
+                        backgroundSize: "200% 200%"
+                      }}
+                    />
+                  )}
                   <Download className="relative z-10 w-4 h-4" />
-                  <span className="relative z-10">Download App</span>
+                  <span className="relative z-10">
+                    {app.isAvailable ? 'Download App' : 'Coming Soon'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -165,7 +170,7 @@ const SchoolApps = () => {
           </span>
         </div>
         <p className="mt-6 text-slate-400 text-xs">
-          &copy; 2025 Indian School ERP. All Rights Reserved.
+          &copy; {new Date().getFullYear()} Indian School ERP. All Rights Reserved.
         </p>
       </div>
 
