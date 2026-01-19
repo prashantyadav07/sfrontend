@@ -49,7 +49,7 @@ const HeroSection = ({ heroRef }) => {
 
               {/* 2. Teacher Login */}
               <a 
-                href="https://aierpadmin.vercel.app/login"
+                href=" https://aierpteacher.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center px-5 py-2.5 bg-gray-800 text-white rounded-full hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 font-medium text-sm"
@@ -60,7 +60,7 @@ const HeroSection = ({ heroRef }) => {
 
               {/* 3. Student Login */}
               <a 
-                href="https://aierpadmin.vercel.app/login"
+                href="https://aierpstudent.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center px-5 py-2.5 bg-gray-800 text-white rounded-full hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 font-medium text-sm"
