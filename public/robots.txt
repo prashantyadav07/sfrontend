@@ -1,0 +1,58 @@
+# Ednora ERP - Robots.txt Configuration
+# Enterprise-level crawler rules for optimal SEO
+
+# ==================== UNIVERSAL CRAWLERS ====================
+# Allow all legitimate search engine bots
+User-agent: *
+Allow: /
+
+# ==================== MAJOR SEARCH ENGINES ====================
+# Google
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+User-agent: MSNBot
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Baidu (Chinese search engine)
+User-agent: Baiduspider
+Allow: /
+
+# Yandex (Russian search engine)
+User-agent: Yandex
+Allow: /
+
+# ==================== DISALLOWED ROUTES ====================
+# Block private/admin routes and APIs
+User-agent: *
+Disallow: /login
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /private/
+Disallow: /_internal/
+Disallow: /temp/
+Disallow: /*.json$
+
+# ==================== CRAWL OPTIMIZATION ====================
+# Polite crawling - 1 second delay between requests
+Crawl-delay: 1
+
+# ==================== SITEMAP LOCATION ====================
+# Help search engines discover all pages
+Sitemap: https://ednoraerp.com/sitemap.xml

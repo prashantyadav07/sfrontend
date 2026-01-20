@@ -16,7 +16,7 @@ const testimonials = [
     name: "Dr. Priya Sharma",
     role: "Principal",
     org: "Delhi Public School",
-    content: "NextGen ERP has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
+    content: "Ednora ERP has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=200&h=200",
     color: "blue"
@@ -201,7 +201,7 @@ const ProfessionalTestimonials = () => {
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed"
           >
-            Join hundreds of forward-thinking institutions that have modernized their campus management with NextGen ERP.
+            Join hundreds of forward-thinking institutions that have modernized their campus management with Ednora ERP.
           </motion.p>
         </div>
 
