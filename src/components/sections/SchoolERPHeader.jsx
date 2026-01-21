@@ -106,10 +106,10 @@ const SchoolERPHeader = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-base md:text-lg font-bold text-gray-900 leading-none">
-                  Ednora
+                  EdNora ERP
                 </span>
                 <span className="text-[8px] md:text-[9px] font-bold text-blue-600 tracking-wider uppercase">
-                  ERP System
+                  
                 </span>
               </div>
             </div>

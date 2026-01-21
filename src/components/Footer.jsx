@@ -108,7 +108,7 @@ const Footer = () => {
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl font-bold text-white tracking-tight">Ednora ERP</span>
+                  <span className="text-xl font-bold text-white tracking-tight">EdNora ERP</span>
                   {/* BMC LINK INTEGRATED NEXT TO NAME */}
                   <a 
                     href="https://aierpowner-7lu9.vercel.app/" 
@@ -180,7 +180,7 @@ const Footer = () => {
         <div className="mt-8 lg:mt-12 pt-6 border-t border-white/5 flex flex-col-reverse md:flex-row justify-between items-center gap-4">
           
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-[10px] lg:text-xs text-gray-500 font-medium font-mono">
-            <span>© 2025 Ednora INC.</span>
+            <span>© 2025 EdNora INC.</span>
             <span className="hidden md:inline">///</span>
             <span>STATUS: OPTIMAL</span>
           </div>

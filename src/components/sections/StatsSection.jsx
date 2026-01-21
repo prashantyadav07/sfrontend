@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { TrendingUp, Zap, CheckCircle, Clock, ArrowRight } from 'lucide-react';
 
 const ROISection = () => {
@@ -46,26 +47,29 @@ const ROISection = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
           <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs md:text-sm font-bold tracking-wide uppercase mb-4 md:mb-6 border border-blue-100">
             Proven Results
           </span>
-          
+
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
             Real Impact on <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">Efficiency</span>
           </h2>
-          
+
           <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-8 md:mb-10 px-4">
-            Our ERP doesn't just digitize data; it transforms how your school operates. 
+            Our ERP doesn't just digitize data; it transforms how your school operates.
             See the measurable value driven by our technology.
           </p>
 
-          <button className="group inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white transition-all duration-200 bg-gray-900 rounded-full hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+          <Link
+            to="/impact-report"
+            className="group inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white transition-all duration-200 bg-gray-900 rounded-full hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+          >
             Read the Impact Report
             <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
 
         {/* Stats Grid */}
@@ -73,8 +77,8 @@ const ROISection = () => {
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 // CHANGE HERE: rounded-3xl ko rounded-[40px] kar diya hai for "full rounded" look
                 className="group relative flex flex-col items-center bg-white rounded-[40px] border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden"
               >
@@ -85,7 +89,7 @@ const ROISection = () => {
 
                 {/* Percentage */}
                 <div className="relative mb-2">
-                   <span className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br ${stat.color} tracking-tight`}>
+                  <span className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br ${stat.color} tracking-tight`}>
                     {stat.percentage}%
                   </span>
                 </div>
