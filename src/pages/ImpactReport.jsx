@@ -64,7 +64,7 @@ const ImpactReport = () => {
                         <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-3xl">
                             A comprehensive analysis of how our School ERP solution is revolutionizing
                             educational administration, improving efficiency, and empowering stakeholders
-                            across 500+ partner institutions.
+                            across 25+ partner institutions.
                         </p>
                     </div>
                 </div>
@@ -91,14 +91,14 @@ const ImpactReport = () => {
                         </p>
 
                         <p className="text-base text-gray-700 leading-relaxed mb-6">
-                            Based on data collected from over 500 partner schools during the 2023-2024 academic year,
+                            Based on data collected from over 25+ partner schools during the 2024-2025 academic year,
                             this report demonstrates real-world impact across key metrics: administrative efficiency,
                             teacher satisfaction, student engagement, and operational cost reduction.
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                             <MetricCard
-                                number="500+"
+                                number="25+"
                                 label="Partner Schools"
                                 icon={School}
                                 color="blue"

@@ -1,4 +1,4 @@
-# Ednora ERP - Robots.txt Configuration
+# eduTally - Robots.txt Configuration
 # Enterprise-level crawler rules for optimal SEO
 
 # ==================== UNIVERSAL CRAWLERS ====================
@@ -53,6 +53,10 @@ Disallow: /*.json$
 # Polite crawling - 1 second delay between requests
 Crawl-delay: 1
 
+# ==================== HOST PREFERENCE ====================
+# Set preferred domain
+Host: www.edutally.com
+
 # ==================== SITEMAP LOCATION ====================
 # Help search engines discover all pages
-Sitemap: https://ednoraerp.com/sitemap.xml
+Sitemap: https://www.edutally.com/sitemap.xml

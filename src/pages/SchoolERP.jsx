@@ -68,7 +68,9 @@ const SchoolERP = () => {
         schemas={[
           SEO_CONFIG.structuredData.organization,
           SEO_CONFIG.structuredData.softwareApplication,
-          SEO_CONFIG.structuredData.website
+          SEO_CONFIG.structuredData.website,
+          SEO_CONFIG.structuredData.faqPage,
+          SEO_CONFIG.structuredData.breadcrumb
         ]}
       />
 

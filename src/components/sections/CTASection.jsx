@@ -83,7 +83,7 @@ const CTASection = () => {
             {/* Subtext - Readable on all devices */}
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
               Join hundreds of schools revolutionizing education management. 
-              Experience the power of <span className="text-blue-700 font-bold bg-blue-50 px-1 rounded">EdNora ERP</span> today.
+              Experience the power of <span className="text-blue-700 font-bold bg-blue-50 px-1 rounded">eduTally</span> today.
             </p>
 
             {/* CTA Buttons - Stack on Mobile, Row on Desktop */}
