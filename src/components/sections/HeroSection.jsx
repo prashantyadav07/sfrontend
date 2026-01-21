@@ -24,7 +24,7 @@ const HeroSection = ({ heroRef }) => {
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
               Transform Your School with{' '}
               <AuroraText className="whitespace-nowrap">
-                eduTally
+                eduTally ERP
               </AuroraText>
             </h1>
             
