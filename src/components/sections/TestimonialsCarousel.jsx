@@ -16,7 +16,7 @@ const testimonials = [
     name: "Dr. Priya Sharma",
     role: "Principal",
     org: "Delhi Public School",
-    content: "eduTally has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
+    content: "EdNora has transformed how we manage our institution. The intuitive interface and comprehensive features have streamlined our operations significantly.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=200&h=200",
     color: "blue"
@@ -73,7 +73,7 @@ const TestimonialCard = ({ item }) => {
     <div className="w-[350px] md:w-[400px] flex-shrink-0 mx-4 h-full">
       <div className="relative group h-full">
         <div className="absolute -inset-0.5 bg-gray-200 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 blur-sm"></div>
-        
+
         <div className="relative h-full bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-6">
@@ -117,7 +117,7 @@ const Marquee = ({ items, direction = "left", speed = 40 }) => {
     <div className="relative flex overflow-hidden group">
       <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent pointer-events-none"></div>
       <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 z-10 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent pointer-events-none"></div>
-      
+
       <motion.div
         className="flex py-10"
         animate={{
@@ -131,7 +131,7 @@ const Marquee = ({ items, direction = "left", speed = 40 }) => {
             ease: "linear",
           },
         }}
-        whileHover={{ animationPlayState: "paused" }} 
+        whileHover={{ animationPlayState: "paused" }}
       >
         {[...items, ...items].map((item, idx) => (
           <TestimonialCard key={`${item.name}-${idx}`} item={item} />
@@ -144,7 +144,7 @@ const Marquee = ({ items, direction = "left", speed = 40 }) => {
 const AnimatedNumber = ({ value }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
+
   return (
     <motion.span
       ref={ref}
@@ -160,13 +160,13 @@ const AnimatedNumber = ({ value }) => {
 const ProfessionalTestimonials = () => {
   return (
     <section className="relative w-full overflow-hidden bg-slate-50 py-24 md:py-32">
-      
+
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:32px_32px] opacity-20"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -181,32 +181,32 @@ const ProfessionalTestimonials = () => {
             <span className="text-xs font-bold tracking-wide text-gray-600 uppercase">Trusted by Education Leaders</span>
           </motion.div>
 
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6"
           >
-            Loved by schools, <br className="hidden md:block"/>
+            Loved by schools, <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
-               built for excellence.
+              built for excellence.
             </span>
           </motion.h2>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed"
           >
-            Join hundreds of forward-thinking institutions that have modernized their campus management with eduTally.
+            Join hundreds of forward-thinking institutions that have modernized their campus management with EdNora.
           </motion.p>
         </div>
 
         <div className="relative -mx-4 md:-mx-0 mb-20">
-           <Marquee items={testimonials} speed={50} />
+          <Marquee items={testimonials} speed={50} />
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
@@ -237,7 +237,7 @@ const ProfessionalTestimonials = () => {
         </div>
 
         {/* --- Updated CTA Box with Animated Airy Orange Gradient --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -246,20 +246,20 @@ const ProfessionalTestimonials = () => {
         >
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-gray-50 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-gray-50 rounded-full blur-3xl"></div>
-          
+
           <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div>
               <h3 className="text-3xl font-bold text-gray-900 mb-2">Ready to transform your school?</h3>
               <p className="text-gray-500 text-lg">Join the fastest growing education network today.</p>
             </div>
-            
+
             {/* Contact Us Button with Airy Orange Animated Gradient */}
-            <Link 
-              to="/contact" 
+            <Link
+              to="/contact"
               className="group relative px-8 py-4 text-gray-900 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 flex items-center gap-2 overflow-hidden border border-orange-200"
             >
               {/* Background Animated Gradient Layer */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-0 bg-gradient-to-r from-orange-400/40 via-orange-200/20 to-transparent"
                 animate={{
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -273,7 +273,7 @@ const ProfessionalTestimonials = () => {
                   backgroundSize: "200% 200%"
                 }}
               />
-              
+
               <span className="relative z-10">Contact Us</span>
               <ArrowUpRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </Link>

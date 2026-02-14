@@ -5,7 +5,7 @@
   
   <!-- ==================== HOMEPAGE - HIGHEST PRIORITY ==================== -->
   <url>
-    <loc>https://www.edutally.com/</loc>
+    <loc>https://www.EdNora.com/</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -13,7 +13,7 @@
   
   <!-- ==================== CONTACT PAGE ==================== -->
   <url>
-    <loc>https://www.edutally.com/contact</loc>
+    <loc>https://www.EdNora.com/contact</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -21,7 +21,7 @@
   
   <!-- ==================== ABOUT PAGE ==================== -->
   <url>
-    <loc>https://www.edutally.com/about</loc>
+    <loc>https://www.EdNora.com/about</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -29,7 +29,7 @@
   
   <!-- ==================== SCHOOL APPS PAGE ==================== -->
   <url>
-    <loc>https://www.edutally.com/school-apps</loc>
+    <loc>https://www.EdNora.com/school-apps</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -37,7 +37,7 @@
 
   <!-- ==================== IMPACT REPORT PAGE ==================== -->
   <url>
-    <loc>https://www.edutally.com/impact-report</loc>
+    <loc>https://www.EdNora.com/impact-report</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

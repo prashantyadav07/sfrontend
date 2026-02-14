@@ -1,10 +1,10 @@
-// SEO Configuration for edutally.com
+// SEO Configuration for EdNora.com
 // Enterprise-level keyword strategy and meta tag optimization
 
 export const SEO_CONFIG = {
     // ==================== KEYWORD STRATEGY ====================
     keywords: {
-        primary: ['school erp', 'school erp software', 'school management software', 'edutally', 'edutally erp'],
+        primary: ['school erp', 'school erp software', 'school management software', 'EdNora', 'EdNora erp'],
         secondary: [
             'school erp system',
             'school erp software india',
@@ -39,7 +39,7 @@ export const SEO_CONFIG = {
             'school erp for cbse',
             'school erp for icse',
             'K12 school management software',
-            'edutally school erp',
+            'EdNora school erp',
             'school data management system'
         ],
         // LSI Keywords for semantic SEO
@@ -59,13 +59,13 @@ export const SEO_CONFIG = {
 
     // ==================== SITE METADATA ====================
     site: {
-        name: 'eduTally',
-        url: 'https://www.edutally.com',
-        logo: 'https://www.edutally.com/logo.png',
+        name: 'EdNora',
+        url: 'https://www.EdNora.com',
+        logo: 'https://www.EdNora.com/logo.png',
         foundingDate: '2015',
-        description: 'eduTally - India\'s #1 School ERP Software. Complete cloud-based school management system for student management, fee collection, attendance tracking, exam management, and more. Trusted by 1000+ schools across India.',
+        description: 'EdNora - India\'s #1 School ERP Software. Complete cloud-based school management system for student management, fee collection, attendance tracking, exam management, and more. Trusted by 1000+ schools across India.',
         slogan: '#1 School ERP Software in India',
-        email: 'info@edutally.com',
+        email: 'info@EdNora.com',
         phone: '+91-8869883042',
         address: {
             country: 'India',
@@ -75,11 +75,11 @@ export const SEO_CONFIG = {
 
     // ==================== DEFAULT META TAGS ====================
     defaultMeta: {
-        title: 'School ERP Software India - #1 eduTally | Best School Management System 2026',
-        titleTemplate: '%s | eduTally',
-        description: 'eduTally - India\'s #1 School ERP Software trusted by 1000+ schools. Complete cloud-based school management system with student management, online fee collection, attendance tracking, exam management, mobile apps, and 24/7 support. Get free demo today!',
-        keywords: 'school erp, school erp software, school management software, school erp software india, best school erp, edutally, edutally erp, cloud based school erp, student information system, fee management software, attendance management, exam management, school administration software, educational erp, K12 school software, cbse school erp, online school management, digital school system',
-        author: 'eduTally',
+        title: 'School ERP Software India - #1 EdNora | Best School Management System 2026',
+        titleTemplate: '%s | EdNora',
+        description: 'EdNora - India\'s #1 School ERP Software trusted by 1000+ schools. Complete cloud-based school management system with student management, online fee collection, attendance tracking, exam management, mobile apps, and 24/7 support. Get free demo today!',
+        keywords: 'school erp, school erp software, school management software, school erp software india, best school erp, EdNora, EdNora erp, cloud based school erp, student information system, fee management software, attendance management, exam management, school administration software, educational erp, K12 school software, cbse school erp, online school management, digital school system',
+        author: 'EdNora',
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
         googlebot: 'index, follow',
         language: 'en-US',
@@ -92,30 +92,30 @@ export const SEO_CONFIG = {
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        siteName: 'eduTally',
+        siteName: 'EdNora',
         image: {
-            url: 'https://www.edutally.com/og-image.png',
+            url: 'https://www.EdNora.com/og-image.png',
             width: 1200,
             height: 630,
-            alt: 'eduTally - #1 School ERP Software in India | Cloud-based School Management System'
+            alt: 'EdNora - #1 School ERP Software in India | Cloud-based School Management System'
         }
     },
 
     // ==================== TWITTER CARD DEFAULTS ====================
     twitter: {
         card: 'summary_large_image',
-        site: '@edutally',
-        creator: '@edutally',
-        image: 'https://www.edutally.com/twitter-image.png'
+        site: '@EdNora',
+        creator: '@EdNora',
+        image: 'https://www.EdNora.com/twitter-image.png'
     },
 
     // ==================== SOCIAL MEDIA PROFILES ====================
     social: {
-        facebook: 'https://facebook.com/edutally',
-        twitter: 'https://twitter.com/edutally',
-        linkedin: 'https://linkedin.com/company/edutally',
-        instagram: 'https://instagram.com/edutally',
-        youtube: 'https://youtube.com/@edutally'
+        facebook: 'https://facebook.com/EdNora',
+        twitter: 'https://twitter.com/EdNora',
+        linkedin: 'https://linkedin.com/company/EdNora',
+        instagram: 'https://instagram.com/EdNora',
+        youtube: 'https://youtube.com/@EdNora'
     },
 
     // ==================== STRUCTURED DATA TEMPLATES ====================
@@ -124,13 +124,13 @@ export const SEO_CONFIG = {
         organization: {
             '@context': 'https://schema.org',
             '@type': 'Organization',
-            name: 'eduTally',
-            alternateName: 'eduTally School ERP',
-            url: 'https://www.edutally.com',
-            logo: 'https://www.edutally.com/logo.png',
+            name: 'EdNora',
+            alternateName: 'EdNora School ERP',
+            url: 'https://www.EdNora.com',
+            logo: 'https://www.EdNora.com/logo.png',
             description: 'India\'s #1 school ERP software provider offering comprehensive cloud-based educational management solutions. Trusted by 1000+ schools for student management, fee collection, attendance tracking, and more.',
             foundingDate: '2015',
-            email: 'info@edutally.com',
+            email: 'info@EdNora.com',
             telephone: '+91-8869883042',
             address: {
                 '@type': 'PostalAddress',
@@ -141,16 +141,16 @@ export const SEO_CONFIG = {
                 '@type': 'ContactPoint',
                 telephone: '+91-8869883042',
                 contactType: 'Customer Service',
-                email: 'info@edutally.com',
+                email: 'info@EdNora.com',
                 areaServed: 'IN',
                 availableLanguage: ['English', 'Hindi']
             },
             sameAs: [
-                'https://facebook.com/edutally',
-                'https://twitter.com/edutally',
-                'https://linkedin.com/company/edutally',
-                'https://instagram.com/edutally',
-                'https://youtube.com/@edutally'
+                'https://facebook.com/EdNora',
+                'https://twitter.com/EdNora',
+                'https://linkedin.com/company/EdNora',
+                'https://instagram.com/EdNora',
+                'https://youtube.com/@EdNora'
             ]
         },
 
@@ -158,8 +158,8 @@ export const SEO_CONFIG = {
         softwareApplication: {
             '@context': 'https://schema.org',
             '@type': 'SoftwareApplication',
-            name: 'eduTally School ERP',
-            alternateName: 'eduTally',
+            name: 'EdNora School ERP',
+            alternateName: 'EdNora',
             applicationCategory: 'BusinessApplication',
             applicationSubCategory: 'Educational Management Software',
             operatingSystem: 'Web, Windows, macOS, Linux, iOS, Android',
@@ -169,7 +169,7 @@ export const SEO_CONFIG = {
                 priceCurrency: 'INR',
                 availability: 'https://schema.org/InStock',
                 priceValidUntil: '2027-12-31',
-                url: 'https://www.edutally.com'
+                url: 'https://www.EdNora.com'
             },
             aggregateRating: {
                 '@type': 'AggregateRating',
@@ -181,43 +181,43 @@ export const SEO_CONFIG = {
             },
             creator: {
                 '@type': 'Organization',
-                name: 'eduTally'
+                name: 'EdNora'
             },
             provider: {
                 '@type': 'Organization',
-                name: 'eduTally',
-                url: 'https://www.edutally.com'
+                name: 'EdNora',
+                url: 'https://www.EdNora.com'
             },
             description: 'Complete cloud-based school ERP and management software for educational institutions in India. Features include student management, fee collection, attendance tracking, exam management, report cards, timetable, staff management, library, transport, and mobile apps.',
             featureList: 'Student Information Management, Online Fee Collection, Attendance Tracking System, Exam Management, Automated Report Cards, Timetable Management, Staff Management, Payroll System, Library Management, Transport Management, Hostel Management, Mobile Apps for Parents and Students, SMS Notifications, Email Alerts, Online Admission, Gate Pass System, Assignment Management, Parent-Teacher Communication',
-            screenshot: 'https://www.edutally.com/screenshot.png',
+            screenshot: 'https://www.EdNora.com/screenshot.png',
             softwareVersion: '3.0',
             releaseNotes: 'Latest version with AI-powered features, enhanced mobile apps, and improved performance',
-            downloadUrl: 'https://www.edutally.com/school-apps',
-            installUrl: 'https://www.edutally.com/school-apps'
+            downloadUrl: 'https://www.EdNora.com/school-apps',
+            installUrl: 'https://www.EdNora.com/school-apps'
         },
 
         // WebSite Schema
         website: {
             '@context': 'https://schema.org',
             '@type': 'WebSite',
-            name: 'eduTally',
-            alternateName: 'eduTally School ERP',
-            url: 'https://www.edutally.com',
+            name: 'EdNora',
+            alternateName: 'EdNora School ERP',
+            url: 'https://www.EdNora.com',
             description: '#1 School ERP software in India - Complete cloud-based school management system',
             publisher: {
                 '@type': 'Organization',
-                name: 'eduTally',
+                name: 'EdNora',
                 logo: {
                     '@type': 'ImageObject',
-                    url: 'https://www.edutally.com/logo.png'
+                    url: 'https://www.EdNora.com/logo.png'
                 }
             },
             potentialAction: {
                 '@type': 'SearchAction',
                 target: {
                     '@type': 'EntryPoint',
-                    urlTemplate: 'https://www.edutally.com/search?q={search_term_string}'
+                    urlTemplate: 'https://www.EdNora.com/search?q={search_term_string}'
                 },
                 'query-input': 'required name=search_term_string'
             }
@@ -227,12 +227,12 @@ export const SEO_CONFIG = {
         localBusiness: {
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
-            '@id': 'https://www.edutally.com',
-            name: 'eduTally',
-            image: 'https://www.edutally.com/logo.png',
+            '@id': 'https://www.EdNora.com',
+            name: 'EdNora',
+            image: 'https://www.EdNora.com/logo.png',
             telephone: '+91-8869883042',
-            email: 'info@edutally.com',
-            url: 'https://www.edutally.com',
+            email: 'info@EdNora.com',
+            url: 'https://www.EdNora.com',
             address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'IN',
@@ -271,26 +271,26 @@ export const SEO_CONFIG = {
                 },
                 {
                     '@type': 'Question',
-                    name: 'Why choose eduTally School ERP?',
+                    name: 'Why choose EdNora School ERP?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'eduTally is India\'s #1 School ERP Software trusted by 1000+ schools. It offers complete automation, mobile apps for parents and students, 24/7 support, cloud-based access, affordable pricing, and comprehensive features including student management, fee collection, attendance tracking, exam management, and much more.'
+                        text: 'EdNora is India\'s #1 School ERP Software trusted by 1000+ schools. It offers complete automation, mobile apps for parents and students, 24/7 support, cloud-based access, affordable pricing, and comprehensive features including student management, fee collection, attendance tracking, exam management, and much more.'
                     }
                 },
                 {
                     '@type': 'Question',
-                    name: 'Is eduTally suitable for CBSE and ICSE schools?',
+                    name: 'Is EdNora suitable for CBSE and ICSE schools?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'Yes, eduTally School ERP is designed to work with all educational boards including CBSE, ICSE, State Boards, and International Boards. It is fully customizable to meet your specific curriculum and grading requirements.'
+                        text: 'Yes, EdNora School ERP is designed to work with all educational boards including CBSE, ICSE, State Boards, and International Boards. It is fully customizable to meet your specific curriculum and grading requirements.'
                     }
                 },
                 {
                     '@type': 'Question',
-                    name: 'Does eduTally provide mobile apps?',
+                    name: 'Does EdNora provide mobile apps?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'Yes, eduTally provides free mobile apps for both Android and iOS platforms. Parents and students can access attendance, grades, fees, assignments, notifications, and communicate with teachers through the mobile app.'
+                        text: 'Yes, EdNora provides free mobile apps for both Android and iOS platforms. Parents and students can access attendance, grades, fees, assignments, notifications, and communicate with teachers through the mobile app.'
                     }
                 },
                 {
@@ -298,15 +298,15 @@ export const SEO_CONFIG = {
                     name: 'How much does School ERP software cost?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'eduTally offers flexible and affordable pricing plans based on the number of students and features required. Contact us at +91-8869883042 or info@edutally.com for a free demo and custom quote.'
+                        text: 'EdNora offers flexible and affordable pricing plans based on the number of students and features required. Contact us at +91-8869883042 or info@EdNora.com for a free demo and custom quote.'
                     }
                 },
                 {
                     '@type': 'Question',
-                    name: 'Is eduTally cloud-based or on-premise?',
+                    name: 'Is EdNora cloud-based or on-premise?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'eduTally is a cloud-based School ERP software accessible from anywhere with internet connection. This ensures automatic updates, data security, backup, and no need for expensive hardware or IT infrastructure.'
+                        text: 'EdNora is a cloud-based School ERP software accessible from anywhere with internet connection. This ensures automatic updates, data security, backup, and no need for expensive hardware or IT infrastructure.'
                     }
                 }
             ]
@@ -321,19 +321,19 @@ export const SEO_CONFIG = {
                     '@type': 'ListItem',
                     position: 1,
                     name: 'Home',
-                    item: 'https://www.edutally.com/'
+                    item: 'https://www.EdNora.com/'
                 },
                 {
                     '@type': 'ListItem',
                     position: 2,
                     name: 'School ERP Software',
-                    item: 'https://www.edutally.com/#features'
+                    item: 'https://www.EdNora.com/#features'
                 },
                 {
                     '@type': 'ListItem',
                     position: 3,
                     name: 'Contact',
-                    item: 'https://www.edutally.com/contact'
+                    item: 'https://www.EdNora.com/contact'
                 }
             ]
         }
@@ -342,52 +342,52 @@ export const SEO_CONFIG = {
     // ==================== PAGE-SPECIFIC SEO ====================
     pages: {
         home: {
-            title: 'School ERP Software India - #1 eduTally | Best School Management System 2026',
-            description: 'eduTally - India\'s #1 School ERP Software trusted by 1000+ schools. Complete cloud-based school management system with student management, online fee collection, attendance tracking, exam management, mobile apps, and 24/7 support. Get free demo today!',
-            keywords: 'school erp, school erp software, school management software, school erp software india, best school erp, edutally, cloud based school erp, student information system, online school management, K12 school software',
-            canonical: 'https://www.edutally.com/',
-            ogImage: 'https://www.edutally.com/og-home.png'
+            title: 'School ERP Software India - #1 EdNora | Best School Management System 2026',
+            description: 'EdNora - India\'s #1 School ERP Software trusted by 1000+ schools. Complete cloud-based school management system with student management, online fee collection, attendance tracking, exam management, mobile apps, and 24/7 support. Get free demo today!',
+            keywords: 'school erp, school erp software, school management software, school erp software india, best school erp, EdNora, cloud based school erp, student information system, online school management, K12 school software',
+            canonical: 'https://www.EdNora.com/',
+            ogImage: 'https://www.EdNora.com/og-home.png'
         },
 
         contact: {
-            title: 'Contact Us | eduTally School ERP - Get Free Demo',
-            description: 'Contact eduTally for school ERP software inquiries. Get a free demo, pricing, or support. Call +91-8869883042 or email info@edutally.com. Expert team ready to help transform your school.',
-            keywords: 'contact edutally, school erp contact, school erp demo, school software inquiry, edutally support',
-            canonical: 'https://www.edutally.com/contact',
-            ogImage: 'https://www.edutally.com/og-contact.png',
+            title: 'Contact Us | EdNora School ERP - Get Free Demo',
+            description: 'Contact EdNora for school ERP software inquiries. Get a free demo, pricing, or support. Call +91-8869883042 or email info@EdNora.com. Expert team ready to help transform your school.',
+            keywords: 'contact EdNora, school erp contact, school erp demo, school software inquiry, EdNora support',
+            canonical: 'https://www.EdNora.com/contact',
+            ogImage: 'https://www.EdNora.com/og-contact.png',
             robots: 'index, follow'
         },
 
         about: {
-            title: 'About eduTally | Leading School ERP Software Provider in India Since 2015',
-            description: 'Learn about eduTally - India\'s #1 school ERP software provider trusted by 1000+ schools since 2015. Our mission is to empower educational institutions with cutting-edge cloud-based ERP technology.',
-            keywords: 'about edutally, school erp company, educational software provider india, school management solution provider',
-            canonical: 'https://www.edutally.com/about',
-            ogImage: 'https://www.edutally.com/og-about.png'
+            title: 'About EdNora | Leading School ERP Software Provider in India Since 2015',
+            description: 'Learn about EdNora - India\'s #1 school ERP software provider trusted by 1000+ schools since 2015. Our mission is to empower educational institutions with cutting-edge cloud-based ERP technology.',
+            keywords: 'about EdNora, school erp company, educational software provider india, school management solution provider',
+            canonical: 'https://www.EdNora.com/about',
+            ogImage: 'https://www.EdNora.com/og-about.png'
         },
 
         schoolApps: {
-            title: 'School Mobile Apps | eduTally Apps for Parents & Students - Free Download',
-            description: 'Download free eduTally School Apps for Android & iOS. Parents and students can access attendance, grades, fees, assignments, notifications, and communicate with teachers. Best school app in India.',
-            keywords: 'school app, student app, parent app, school mobile application, edutally app, school erp app, best school app india',
-            canonical: 'https://www.edutally.com/school-apps',
-            ogImage: 'https://www.edutally.com/og-apps.png'
+            title: 'School Mobile Apps | EdNora Apps for Parents & Students - Free Download',
+            description: 'Download free EdNora School Apps for Android & iOS. Parents and students can access attendance, grades, fees, assignments, notifications, and communicate with teachers. Best school app in India.',
+            keywords: 'school app, student app, parent app, school mobile application, EdNora app, school erp app, best school app india',
+            canonical: 'https://www.EdNora.com/school-apps',
+            ogImage: 'https://www.EdNora.com/og-apps.png'
         },
 
         login: {
-            title: 'Login to eduTally | School ERP Management System Access',
-            description: 'Secure login to eduTally school ERP system. Access your dashboard for student management, fee collection, attendance tracking, exam management, and more.',
-            keywords: 'edutally login, school erp login, educational software login',
-            canonical: 'https://www.edutally.com/login',
+            title: 'Login to EdNora | School ERP Management System Access',
+            description: 'Secure login to EdNora school ERP system. Access your dashboard for student management, fee collection, attendance tracking, exam management, and more.',
+            keywords: 'EdNora login, school erp login, educational software login',
+            canonical: 'https://www.EdNora.com/login',
             robots: 'noindex, nofollow' // Don't index login page
         },
 
         impactReport: {
-            title: 'Impact Report | eduTally School ERP Success Stories',
-            description: 'Read how eduTally School ERP has transformed 1000+ schools across India. Real impact stories, data insights, and success metrics from our partner schools.',
-            keywords: 'school erp impact, edutally success stories, school management case studies, erp impact report',
-            canonical: 'https://www.edutally.com/impact-report',
-            ogImage: 'https://www.edutally.com/og-impact.png'
+            title: 'Impact Report | EdNora School ERP Success Stories',
+            description: 'Read how EdNora School ERP has transformed 1000+ schools across India. Real impact stories, data insights, and success metrics from our partner schools.',
+            keywords: 'school erp impact, EdNora success stories, school management case studies, erp impact report',
+            canonical: 'https://www.EdNora.com/impact-report',
+            ogImage: 'https://www.EdNora.com/og-impact.png'
         }
     }
 };

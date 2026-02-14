@@ -1,89 +1,106 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   LayoutDashboard, GraduationCap, Users, CreditCard, 
-  School, CalendarCheck, Bus, CalendarRange, 
-  Briefcase, FileText, BookOpen, Library, 
-  Building2, Box, Receipt, MessageSquareWarning, Bell, X, CheckCircle2 
+  School, Bus, FileText, Library, Box, Bell, X, CheckCircle2, 
+  Crown, Sparkles, Star, Flower2, Heart, Zap
 } from 'lucide-react';
 
-// --- 1. DATA (All Real Images) ---
+// --- 1. ERP DATA (Content) ---
 const modules = [
   { 
     id: 1,
-    name: "Admin Dashboard", 
-    desc: "360° Campus Analytics", 
+    name: "Admin Control", 
+    desc: "360° Analytics", 
     icon: LayoutDashboard, 
     color: "bg-blue-600",
+    sticker: Crown, 
+    stickerColor: "text-yellow-400 fill-yellow-400",
+    rotate: "rotate-12",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
     details: {
-      title: "Central Command Center",
-      description: "Get a bird's-eye view of your entire institution's health. Monitor attendance, fee collection, and academic performance in real-time.",
-      features: ["Real-time KPI Tracking", "Customizable Widgets", "Daily Admission Stats", "Revenue Graphs"]
+      title: "Admin Dashboard & Analytics",
+      description: "Complete control over your institution. Monitor admissions, fee collection, and staff attendance in real-time.",
+      features: ["Daily Admission Stats", "Fee Collection Reports", "Staff Attendance", "Expense Tracker"]
     }
   },
   { 
     id: 2,
-    name: "Student Lifecycle", 
+    name: "Student Info", 
     desc: "Admission to Alumni", 
     icon: GraduationCap, 
     color: "bg-emerald-600",
+    sticker: Flower2,
+    stickerColor: "text-pink-400 fill-pink-400",
+    rotate: "-rotate-12",
     image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Student Information System",
-      description: "Manage the complete journey of a student from the moment they enquire to the day they become alumni.",
-      features: ["Online Admission Forms", "Digital Student Profiles", "Document Repository", "Alumni Network"]
+      description: "Manage the complete student lifecycle from online inquiry to final certification and alumni management.",
+      features: ["Online Admission Forms", "Digital Profiles", "ID Card Generation", "Parent Communication"]
     }
   },
   { 
     id: 3,
-    name: "Faculty Hub", 
-    desc: "Staff & Payroll", 
+    name: "HR & Payroll", 
+    desc: "Staff Management", 
     icon: Users, 
     color: "bg-orange-500",
+    sticker: Star,
+    stickerColor: "text-blue-400 fill-blue-400",
+    rotate: "rotate-6",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
     details: {
-      title: "Teacher & Staff Management",
-      description: "Empower your faculty with digital tools while simplifying HR processes like payroll and leave management.",
-      features: ["Biometric Attendance Sync", "Auto-Payroll Generation", "Performance Reviews", "Digital Service Books"]
+      title: "Human Resource Management",
+      description: "Automate staff attendance via biometrics and generate accurate payroll with one click.",
+      features: ["Biometric Sync", "Auto-Payslip Gen", "Leave Management", "Performance Reviews"]
     }
   },
   { 
     id: 4,
-    name: "Smart Fees", 
-    desc: "Automated Billing", 
+    name: "Fee Manager", 
+    desc: "Auto Invoicing", 
     icon: CreditCard, 
     color: "bg-purple-600",
+    sticker: Sparkles,
+    stickerColor: "text-purple-400 fill-purple-400",
+    rotate: "-rotate-6",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Fee & Finance Engine",
-      description: "Eliminate queues and manual errors. Automate invoice generation and accept payments online securely.",
-      features: ["Payment Gateway Integration", "Auto-Reminders via SMS", "Scholarship Management", "Defaulter Reports"]
+      description: "Send automated fee reminders and accept online payments securely. No more long queues.",
+      features: ["Online Payment Gateway", "Auto-Reminders (SMS)", "Defaulter Lists", "Scholarship Mgmt"]
     }
   },
   { 
     id: 5,
-    name: "Classroom Manager", 
-    desc: "Timetable & Subjects", 
+    name: "Academics", 
+    desc: "Timetable & LMS", 
     icon: School, 
     color: "bg-indigo-600",
+    sticker: Heart,
+    stickerColor: "text-red-400 fill-red-400",
+    rotate: "rotate-12",
     image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=600",
     details: {
-      title: "Academic Scheduling",
-      description: "Create conflict-free timetables for hundreds of classes and teachers in minutes.",
-      features: ["Drag-and-Drop Builder", "Substitute Teacher Allocation", "Syllabus Tracking", "Section Management"]
+      title: "Academic Management",
+      description: "Create conflict-free timetables and manage lesson plans. Share homework and notes digitally.",
+      features: ["Timetable Builder", "Homework Module", "Syllabus Tracking", "E-Learning Resources"]
     }
   },
   { 
     id: 6,
-    name: "Transport & GPS", 
-    desc: "Live Bus Tracking", 
+    name: "Transport", 
+    desc: "GPS Tracking", 
     icon: Bus, 
     color: "bg-yellow-500",
+    sticker: Zap,
+    stickerColor: "text-yellow-500 fill-yellow-500",
+    rotate: "-rotate-12",
     image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Transport Management",
-      description: "Ensure student safety with real-time GPS tracking and automated route optimization.",
-      features: ["Live Parent App Tracking", "Route Optimization", "Driver Management", "Vehicle Maintenance Logs"]
+      description: "Ensure student safety with real-time bus tracking and automated route optimization.",
+      features: ["Live Parent App", "Route Optimization", "Driver Management", "Vehicle Maintenance"]
     }
   },
   { 
@@ -92,305 +109,201 @@ const modules = [
     desc: "Results & Cards", 
     icon: FileText, 
     color: "bg-cyan-600",
+    sticker: Star,
+    stickerColor: "text-orange-400 fill-orange-400",
+    rotate: "rotate-45",
     image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Exam Controller",
-      description: "Streamline the entire examination process from admit card generation to result publication.",
-      features: ["GPA/CGB Calculation", "Automatic Report Cards", "Exam Seating Plan", "Question Paper Bank"]
+      description: "Conduct offline or online exams and generate report cards instantly.",
+      features: ["Admit Card Gen", "Report Card Builder", "Marks Entry App", "Question Bank"]
     }
   },
   { 
     id: 8,
-    name: "e-Library", 
+    name: "Library", 
     desc: "Digital Catalog", 
     icon: Library, 
     color: "bg-amber-600",
+    sticker: Sparkles,
+    stickerColor: "text-green-400 fill-green-400",
+    rotate: "-rotate-6",
     image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600",
     details: {
       title: "Library Automation",
-      description: "Transform your library into a digital knowledge hub with barcode integration.",
-      features: ["Barcode Scanning", "Fine Calculation", "Book Reservation", "Online OPAC Search"]
-    }
-  },
-  { 
-    id: 9,
-    name: "Inventory", 
-    desc: "Asset Management", 
-    icon: Box, 
-    color: "bg-lime-600",
-    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80&w=600",
-    details: {
-      title: "Store & Inventory",
-      description: "Keep track of every piece of equipment, stationery, and furniture in your institution.",
-      features: ["Vendor Management", "Purchase Orders", "Stock Alerts", "Asset Depreciation"]
-    }
-  },
-  { 
-    id: 10,
-    name: "Communication", 
-    desc: "SMS & Notifications", 
-    icon: Bell, 
-    color: "bg-violet-600",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600",
-    details: {
-      title: "Alert System",
-      description: "Bridge the gap between parents and the school with instant notifications.",
-      features: ["Bulk SMS/Email", "Push Notifications", "Event Reminders", "Circular Management"]
+      description: "Manage books, issue/returns, and fines efficiently with barcode support.",
+      features: ["Barcode Scanning", "Fine Calculation", "Book Reservation", "OPAC Search"]
     }
   }
 ];
 
-const firstRow = modules.slice(0, 5);
-const secondRow = modules.slice(5, 10);
-
-// --- 2. MODAL COMPONENT (Responsive) ---
+// --- 2. MODAL COMPONENT ---
 const FeatureModal = ({ module, onClose }) => {
   if (!module) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm animate-fade-in">
-      {/* Modal Container: 95% width on mobile, max-3xl on desktop */}
-      <div className="bg-white rounded-2xl shadow-2xl w-[95%] max-w-3xl overflow-hidden animate-scale-up relative max-h-[90vh] overflow-y-auto flex flex-col md:flex-row">
-        
-        {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 bg-white/30 hover:bg-white/50 backdrop-blur-md rounded-full text-gray-800 transition"
-        >
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative flex flex-col max-h-[90vh]">
+        <button onClick={onClose} className="absolute top-3 right-3 z-20 p-2 bg-gray-100/80 backdrop-blur-sm rounded-full hover:bg-gray-200 transition">
           <X size={20} />
         </button>
-
-        {/* Left: Image Side (Full width mobile, 40% desktop) */}
-        <div className="w-full md:w-2/5 h-48 md:h-auto relative shrink-0">
-          <img src={module.image} alt={module.name} className="w-full h-full object-cover" />
-          <div className={`absolute inset-0 ${module.color} opacity-20 mix-blend-multiply`}></div>
-          <div className="absolute bottom-4 left-4 text-white z-10">
-            <div className={`p-2 rounded-lg ${module.color} inline-block shadow-lg mb-2`}>
-              <module.icon size={24} />
+        
+        <div className="flex flex-col md:flex-row h-full overflow-y-auto md:overflow-hidden">
+            <div className="w-full md:w-2/5 h-48 md:h-auto relative shrink-0">
+                <img src={module.image} alt={module.name} className="w-full h-full object-cover" />
+                <div className={`absolute inset-0 ${module.color} opacity-30`}></div>
             </div>
-            <h3 className="text-xl font-bold shadow-black/20 drop-shadow-md">{module.name}</h3>
-          </div>
-        </div>
-
-        {/* Right: Content Side */}
-        <div className="w-full md:w-3/5 p-6 md:p-8 bg-white">
-          <h4 className="text-2xl font-bold text-gray-900 mb-2">{module.details.title}</h4>
-          <p className="text-gray-600 mb-6 leading-relaxed text-sm md:text-base">
-            {module.details.description}
-          </p>
-          
-          <div className="space-y-3">
-            <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Key Features</h5>
-            {module.details.features.map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span className="text-gray-700 text-sm font-medium">{feat}</span>
-              </div>
-            ))}
-          </div>
-
-          <button 
-            onClick={onClose}
-            className={`mt-8 w-full py-3 rounded-lg ${module.color} text-white font-semibold hover:opacity-90 transition shadow-lg shadow-${module.color}/30`}
-          >
-            Close Details
-          </button>
+            <div className="p-6 md:p-8 md:w-3/5 overflow-y-auto">
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${module.color} bg-opacity-10 text-xs font-bold uppercase tracking-wide mb-3`}>
+                   <module.icon size={14} className="text-gray-700"/>
+                   <span className="text-gray-800">{module.name}</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{module.details.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed mb-5">{module.details.description}</p>
+                <div className="space-y-2">
+                    {module.details.features.map((f, i) => (
+                        <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                            <CheckCircle2 size={16} className="text-green-500 shrink-0" />
+                            <span>{f}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
       </div>
     </div>
   );
 };
 
-// --- 3. RESPONSIVE CARD COMPONENT ---
-const ScrollerCard = ({ item, onClick }) => {
-  const Icon = item.icon;
+// --- 3. RESPONSIVE CARD DESIGN ---
+const PlayfulCard = ({ item, onClick }) => {
+  const Sticker = item.sticker;
   return (
     <div 
-      onClick={() => onClick(item)}
-      className="relative group flex-shrink-0 mx-3 md:mx-5
-                 w-[280px] h-[100px] 
-                 md:w-[400px] md:h-[140px]
-                 bg-white rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 
-                 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2"
+      onClick={() => onClick(item)} 
+      className="group relative flex-shrink-0 w-[280px] md:w-[290px] mx-4 pt-16 cursor-pointer transition-transform hover:-translate-y-2"
     >
-      <div className="flex h-full">
-        {/* Left: Image - Responsive Width */}
-        <div className="w-24 md:w-40 relative overflow-hidden shrink-0">
-          <img 
-            src={item.image} 
-            alt={item.name} 
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gray-900/10 group-hover:bg-transparent transition"></div>
-        </div>
-
-        {/* Right: Content - Responsive Text & Padding */}
-        <div className="flex-1 p-3 md:p-5 flex flex-col justify-center relative bg-white">
-          <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-            <div className={`p-1.5 md:p-2 rounded-lg ${item.color} text-white`}>
-              <Icon className="w-4 h-4 md:w-5 md:h-5" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 w-32 h-32 md:w-36 md:h-36">
+        <div className="relative w-full h-full">
+            <img 
+              src={item.image} 
+              alt={item.name} 
+              className="w-full h-full rounded-full object-cover border-[5px] border-white shadow-lg group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className={`absolute -top-1 -right-2 ${item.rotate} drop-shadow-md bg-white p-1.5 rounded-full`}>
+               <Sticker className={`w-7 h-7 md:w-8 md:h-8 ${item.stickerColor}`} />
             </div>
-            <h4 className="font-bold text-gray-900 leading-tight text-base md:text-xl">
-              {item.name}
-            </h4>
-          </div>
-          
-          <p className="text-gray-500 font-medium pl-1 line-clamp-2 text-xs md:text-sm">
-            {item.desc}
-          </p>
-          
-          <span className="absolute bottom-2 right-3 md:bottom-3 md:right-4 text-xs md:text-xs text-blue-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-            Click to view →
-          </span>
+        </div>
+      </div>
+
+      <div className="bg-[#FFF5F5] pt-20 pb-6 px-5 rounded-[2.5rem] text-center shadow-sm border border-pink-100 hover:shadow-xl hover:shadow-pink-100/50 transition-all duration-300 h-[260px] flex flex-col items-center">
+        <h3 className="text-lg md:text-xl font-bold text-[#2D2D2D] mb-2 font-sans tracking-tight mt-2">
+          {item.name}
+        </h3>
+        <p className="text-gray-500 text-xs md:text-sm mb-4 leading-relaxed line-clamp-3 px-1">
+           {item.details.description}
+        </p>
+        <div className="mt-auto inline-block text-[10px] md:text-xs font-extrabold text-[#7CB89D] uppercase tracking-widest bg-white px-4 py-1.5 rounded-full shadow-sm">
+           {item.desc}
         </div>
       </div>
     </div>
   );
 };
 
-// --- 4. MAIN SCROLLER SECTION ---
-const InfiniteModuleScroller = () => {
+// --- 4. MAIN LAYOUT ---
+const ErpModulesSection = () => {
   const [selectedModule, setSelectedModule] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const scrollRef1 = React.useRef(null);
-  const scrollRef2 = React.useRef(null);
 
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') setSelectedModule(null);
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+  // Data triplicated for smooth infinite scroll
+  const scrollData = [...modules, ...modules, ...modules];
 
-  const handleMouseDown = (e, ref) => {
-    setIsDragging(true);
-    setStartX(e.pageX - ref.current.offsetLeft);
-    setScrollLeft(ref.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e, ref) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - ref.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    ref.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  // --- 🔥 Scroll Function (Added Here) ---
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Adds smooth animation
+    });
   };
 
   return (
-    <section className="py-20 md:py-32 bg-gray-50 relative overflow-hidden">
+    <div className="relative bg-[#FFFCF3] w-full overflow-hidden font-sans">
       
-      {/* --- HEADER --- */}
-      <div className="max-w-4xl mx-auto text-center px-4 mb-12 md:mb-20 animate-fade-in">
-        <div className="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs md:text-xs font-bold uppercase tracking-widest mb-4 border border-blue-200">
-          Integrated Ecosystem
-        </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 md:mb-6 tracking-tight">
-          Orchestrate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Entire Campus</span>
-        </h2>
-        <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-          From seamless admissions to automated payroll, our modules work in perfect harmony to digitalize every heartbeat of your institution.
-        </p>
-      </div>
+      {/* --- BACKGROUND BLOBS --- */}
+      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#FDE6A6] rounded-br-[100%] rounded-bl-[40%] opacity-30 -translate-x-20 -translate-y-20 z-0 pointer-events-none blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-[#FDE6A6] rounded-tl-full opacity-30 translate-x-10 translate-y-10 z-0 pointer-events-none blur-2xl"></div>
 
-      {/* --- SCROLLER CONTAINER --- */}
-      <div className="relative w-full space-y-6 md:space-y-12">
+      {/* --- CONTENT CONTAINER --- */}
+      <div className="relative z-10 max-w-7xl mx-auto py-12 md:py-16">
         
-        {/* Gradient Masks (Fade edges) */}
-        <div className="absolute inset-y-0 left-0 w-16 md:w-40 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 md:w-40 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
-
-        {/* ROW 1: Moves Left */}
-        <div 
-          ref={scrollRef1}
-          className="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing group"
-          onMouseDown={(e) => handleMouseDown(e, scrollRef1)}
-          onMouseMove={(e) => handleMouseMove(e, scrollRef1)}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          <div className="flex animate-scroll-left group-hover:pause-animation py-2">
-            {[...firstRow, ...firstRow, ...firstRow, ...firstRow].map((item, idx) => (
-              <ScrollerCard key={`r1-${idx}`} item={item} onClick={setSelectedModule} />
-            ))}
-          </div>
+        {/* --- HEADER --- */}
+        <div className="text-center px-4 mb-8">
+          <h4 className="text-[#7CB89D] text-xs font-bold uppercase tracking-[0.2em] mb-3">
+            // INTEGRATED CAMPUS ERP
+          </h4>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-[#2D2D2D] mb-4 tracking-tight leading-tight">
+            Orchestrate Your Entire Campus <br className="hidden md:block" /> Every Department
+          </h2>
+          <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto mb-6 leading-relaxed">
+            From seamless admissions to automated payroll, our modules work in perfect harmony to digitalize every heartbeat of your institution.
+          </p>
+          
+          {/* --- 🔥 Updated Button with onClick --- */}
+          <button 
+            onClick={handleScrollToTop}
+            className="bg-[#F4C446] text-[#2D2D2D] text-sm font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#e0b134] hover:scale-105 transition-all shadow-yellow-500/20"
+          >
+            Explore Modules
+          </button>
         </div>
 
-        {/* ROW 2: Moves Right */}
-        <div 
-          ref={scrollRef2}
-          className="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing group"
-          onMouseDown={(e) => handleMouseDown(e, scrollRef2)}
-          onMouseMove={(e) => handleMouseMove(e, scrollRef2)}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          <div className="flex animate-scroll-right group-hover:pause-animation py-2">
-             {[...secondRow, ...secondRow, ...secondRow, ...secondRow].map((item, idx) => (
-              <ScrollerCard key={`r2-${idx}`} item={item} onClick={setSelectedModule} />
-            ))}
-          </div>
+        {/* --- CAROUSEL --- */}
+        <div className="relative w-full">
+           <div className="absolute left-0 top-0 bottom-0 w-8 md:w-32 bg-gradient-to-r from-[#FFFCF3] to-transparent z-20 pointer-events-none"></div>
+           <div className="absolute right-0 top-0 bottom-0 w-8 md:w-32 bg-gradient-to-l from-[#FFFCF3] to-transparent z-20 pointer-events-none"></div>
+
+           <div className="flex overflow-hidden py-10 md:py-16"> 
+             <div className="flex animate-marquee hover:pause-marquee pl-4">
+               {scrollData.map((item, index) => (
+                 <PlayfulCard 
+                   key={`${item.id}-${index}`} 
+                   item={item} 
+                   onClick={setSelectedModule} 
+                 />
+               ))}
+             </div>
+           </div>
         </div>
 
       </div>
 
-      {/* --- MODAL --- */}
+      {/* Modal Popup */}
       {selectedModule && (
         <FeatureModal module={selectedModule} onClose={() => setSelectedModule(null)} />
       )}
 
-      {/* --- ANIMATIONS & STYLES --- */}
+      {/* --- ANIMATION STYLES --- */}
       <style>{`
-        @keyframes scroll-left {
+        @keyframes marquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.33%); }
         }
-        @keyframes scroll-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scale-up {
-          from { transform: scale(0.9) translateY(20px); opacity: 0; }
-          to { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        
-        .animate-scroll-left {
-          animation: scroll-left 80s linear infinite;
+        .animate-marquee {
+          animation: marquee 50s linear infinite;
           width: max-content;
         }
-        .animate-scroll-right {
-          animation: scroll-right 80s linear infinite;
-          width: max-content;
-        }
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out forwards;
-        }
-        .animate-scale-up {
-          animation: scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .group-hover\\:pause-animation:hover {
+        .hover\\:pause-marquee:hover {
           animation-play-state: paused;
         }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        .animate-fade-in {
+            animation: fade-in 0.2s ease-out forwards;
         }
       `}</style>
-    </section>
+    </div>
   );
 };
 
-export default InfiniteModuleScroller;
+export default ErpModulesSection;

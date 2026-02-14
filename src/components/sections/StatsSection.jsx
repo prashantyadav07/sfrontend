@@ -1,121 +1,110 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Zap, CheckCircle, Clock, ArrowRight } from 'lucide-react';
+import { CheckCircle2, BarChart3, ShieldCheck } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-const ROISection = () => {
-  const stats = [
-    {
-      percentage: 97,
-      label: "Increased teacher satisfaction",
-      icon: TrendingUp,
-      color: "from-orange-500 to-red-500",
-      bg: "bg-orange-50",
-      iconColor: "text-orange-600"
-    },
-    {
-      percentage: 23,
-      label: "Faster administrative execution",
-      icon: Zap,
-      color: "from-purple-500 to-indigo-500",
-      bg: "bg-purple-50",
-      iconColor: "text-purple-600"
-    },
-    {
-      percentage: 45,
-      label: "Increased on-time report completion",
-      icon: CheckCircle,
-      color: "from-emerald-500 to-teal-500",
-      bg: "bg-emerald-50",
-      iconColor: "text-emerald-600"
-    },
-    {
-      percentage: 88,
-      label: "Decreased time on manual tasks",
-      icon: Clock,
-      color: "from-blue-500 to-cyan-500",
-      bg: "bg-blue-50",
-      iconColor: "text-blue-600"
-    }
-  ];
+const StatsSection = () => {
+  const sectionRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Parallax effect: Cards scroll hone par thoda upar move karenge
+  const yParallax = useTransform(scrollYProgress, [0, 1], [50, -100]); 
 
   return (
-    <section className="relative bg-white py-16 md:py-24 lg:py-32 overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none opacity-40">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-20 right-20 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-      </div>
+    <section 
+      ref={sectionRef} 
+      // UPDATED: Padding kam kar di hai (py-10 md:py-16)
+      className="relative w-full py-10 md:py-16 overflow-hidden" 
+      style={{ backgroundColor: '#A3E7D3' }}
+    >
+      
+      {/* --- BACKGROUND DECORATIVE LINES --- */}
+      <svg className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-60" viewBox="0 0 1440 900" fill="none">
+        <path d="M-100 0 C 100 400 300 100 600 500 S 1100 300 1600 600" stroke="white" strokeWidth="3" fill="none" opacity="0.8" />
+        <path d="M-50 200 C 150 500 350 200 650 600 S 1150 400 1650 700" stroke="white" strokeWidth="2" fill="none" opacity="0.5" />
+      </svg>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          
+          {/* ===== LEFT COLUMN: TEXT (Sticky) ===== */}
+          <div className="flex flex-col justify-center text-left lg:sticky lg:top-24 h-fit">
+            <span className="text-gray-700 font-bold tracking-[0.2em] text-xs uppercase mb-4 block opacity-70">
+              // WHY CHOOSE US
+            </span>
 
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-          <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs md:text-sm font-bold tracking-wide uppercase mb-4 md:mb-6 border border-blue-100">
-            Proven Results
-          </span>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-5 leading-tight">
+              Why <br /><span className="text-gray-800">EdNora ERP?</span>
+            </h2>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
-            Real Impact on <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">Efficiency</span>
-          </h2>
+            <p className="text-base md:text-lg text-gray-800 leading-relaxed mb-6 max-w-lg font-medium opacity-90">
+              We streamline your school's complex operations into one simple dashboard. From admission to alumni management, EdNora ERP empowers educators to focus less on paperwork and more on student success.
+            </p>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-8 md:mb-10 px-4">
-            Our ERP doesn't just digitize data; it transforms how your school operates.
-            See the measurable value driven by our technology.
-          </p>
-
-          <Link
-            to="/impact-report"
-            className="group inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white transition-all duration-200 bg-gray-900 rounded-full hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-          >
-            Read the Impact Report
-            <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {stats.map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={idx}
-                // CHANGE HERE: rounded-3xl ko rounded-[40px] kar diya hai for "full rounded" look
-                className="group relative flex flex-col items-center bg-white rounded-[40px] border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden"
+            <div>
+              <Link
+                to="/features"
+                className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-gray-900 bg-[#FACC15] rounded-xl hover:bg-[#EAB308] hover:scale-105 transition-all duration-300 shadow-md"
               >
-                {/* Icon Container */}
-                <div className={`mb-6 p-4 rounded-2xl ${stat.bg} group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className={`w-8 h-8 md:w-10 md:h-10 ${stat.iconColor}`} strokeWidth={1.5} />
-                </div>
+                Explore Features
+              </Link>
+            </div>
+          </div>
 
-                {/* Percentage */}
-                <div className="relative mb-2">
-                  <span className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br ${stat.color} tracking-tight`}>
-                    {stat.percentage}%
-                  </span>
-                </div>
+          {/* ===== RIGHT COLUMN: ANIMATED ZIGZAG CARDS ===== */}
+          <motion.div 
+            style={{ y: yParallax }} 
+            className="flex flex-col gap-5 w-full mt-4 lg:mt-0"
+          >
 
-                {/* Label */}
-                <p className="text-sm md:text-base font-medium text-gray-600 text-center leading-snug mb-4">
-                  {stat.label}
-                </p>
-
-                {/* Bottom Line */}
-                <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-1.5 w-1/2 bg-gradient-to-r ${stat.color} rounded-t-full`}></div>
+            {/* CARD 1 */}
+            <div className="self-end w-full md:w-[75%] bg-white rounded-[24px] p-5 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 relative">
+              <div className="absolute -top-4 left-6 bg-[#BFDBFE] w-10 h-10 rounded-lg flex items-center justify-center rotate-3 shadow-sm border-2 border-white">
+                <ShieldCheck className="text-blue-600 w-5 h-5" />
               </div>
-            );
-          })}
-        </div>
+              <h3 className="text-lg font-bold text-gray-900 mt-4 mb-2">
+                Secure Data Management
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                Bank-grade encryption and role-based access control ensure student records and financial data remain private and compliant.
+              </p>
+            </div>
 
-        {/* Footer Note */}
-        <div className="mt-12 md:mt-16 text-center border-t border-gray-100 pt-8">
-          <p className="text-xs md:text-sm text-gray-400 font-medium">
-            ** Data gathered from 500+ partner schools over the 2023-2024 academic year.
-          </p>
-        </div>
+            {/* CARD 2 */}
+            <div className="self-start w-full md:w-[75%] bg-[#F87171] rounded-[24px] p-5 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 relative text-white mt-1">
+              <div className="absolute -top-4 left-6 bg-[#FECACA] w-10 h-10 rounded-lg flex items-center justify-center -rotate-3 shadow-md border-2 border-[#F87171]">
+                <BarChart3 className="text-[#991B1B] w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-white mt-4 mb-2">
+                Smart Analytics & Insights
+              </h3>
+              <p className="text-white/90 leading-relaxed text-sm">
+                Track attendance trends, academic performance, and fee collections instantly with real-time reports to drive growth.
+              </p>
+            </div>
 
+            {/* CARD 3 */}
+            <div className="self-end w-full md:w-[75%] bg-white rounded-[24px] p-5 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 relative mt-1">
+              <div className="absolute -top-4 left-6 bg-[#BBF7D0] w-10 h-10 rounded-lg flex items-center justify-center rotate-3 shadow-sm border-2 border-white">
+                <CheckCircle2 className="text-green-600 w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mt-4 mb-2">
+                Paperless Operations
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                Automate daily tasks like digital attendance, fee reminders, and report card generation to simplify workflow for staff.
+              </p>
+            </div>
+
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
-export default ROISection;
+export default StatsSection;
